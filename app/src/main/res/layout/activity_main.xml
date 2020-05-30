@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/ptFrom"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" android:hint="@string/fromHint" app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            android:autofillHints="Hilversum"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/ptTo"
+            app:layout_constraintTop_toBottomOf="@+id/ptFrom" app:layout_constraintStart_toStartOf="@+id/ptFrom"
+            app:layout_constraintEnd_toEndOf="@+id/ptFrom" android:hint="@string/toHint" android:autofillHints="Utrecht Centraal"/>
+    <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/spType"
+            app:layout_constraintTop_toBottomOf="@+id/ptTo" app:layout_constraintStart_toStartOf="@+id/ptTo"
+            app:layout_constraintEnd_toEndOf="@+id/ptTo"/>
+    <Button
+            android:text="@android:string/search_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/btnSearch"
+            app:layout_constraintTop_toBottomOf="@+id/spType" app:layout_constraintEnd_toEndOf="@+id/ptTo"
+            app:layout_constraintStart_toStartOf="@+id/ptTo"/>
+    <TextView
+            android:text="@string/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/tvTitle"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="32dp" android:textSize="30sp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
