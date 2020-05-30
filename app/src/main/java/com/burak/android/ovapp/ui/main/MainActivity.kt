@@ -62,10 +62,10 @@ class MainActivity : AppCompatActivity() {
                 && destination.isNotBlank()
             ) {
                 GlobalScope.launch {
-                    val from = NSApi.getAllStations()[origin] ?: error("hilversum not found")
-                    val to = NSApi.getAllStations()[destination] ?: error("sloterdijk not found")
+                    val from = NSApi.getAllStations()[origin] ?: error("$origin not found")
+                    val to = NSApi.getAllStations()[destination] ?: error("$destination not found")
 
-                    println(NSApi.getTrips(from, to)[0])
+                    println(NSApi.getTrips(from, to, dateString)[0])
                 }
             } else {
                 Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_LONG).show()

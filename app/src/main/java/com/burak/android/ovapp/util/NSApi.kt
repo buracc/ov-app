@@ -45,14 +45,14 @@ object NSApi {
         return stations
     }
 
-    fun getTrips(origin: Station, destination: Station): List<Trip> {
+    fun getTrips(origin: Station, destination: Station, dateTime: String): List<Trip> {
         val out = mutableListOf<Trip>()
         val url =
-            "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v3/trips?travelClass=SECOND_CLASS&" +
+            "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v3/trips?" +
                     "originTransit=false&originWalk=false&originBike=false&originCar=false&travelAssistanceTransferTime=0&" +
                     "searchForAccessibleTrip=false&destinationTransit=false&destinationWalk=false&destinationBike=false&" +
                     "destinationCar=false&excludeHighSpeedTrains=false&excludeReservationRequired=false&passing=false&" +
-                    "originUicCode=${origin.uicCode}&destinationUicCode=${destination.uicCode}"
+                    "originUicCode=${origin.uicCode}&destinationUicCode=${destination.uicCode}&dateTime=$dateTime"
         val request = requestBase.url(url).build()
 
         val arrivalKey = "plannedArrivalDateTime"
