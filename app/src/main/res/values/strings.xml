@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">OVApp</string>
+    <string name="app_name">OV-App</string>
     <string name="arrow"><![CDATA[->]]></string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="title">OVApp</string>
+    <string name="title">Plan your trip</string>
     <string name="fromHint">From…</string>
     <string name="toHint">To…</string>
 </resources>

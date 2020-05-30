@@ -1,0 +1,2 @@
+rootProject.name='OVApp'
+include ':app'

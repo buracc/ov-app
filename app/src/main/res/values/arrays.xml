@@ -2,7 +2,7 @@
 <resources>
     <string-array name="types">
         <item>Train</item>
-        <item>Metro</item>
-        <item>Bus</item>
+<!--        <item>Metro</item>-->
+<!--        <item>Bus</item>-->
     </string-array>
 </resources>

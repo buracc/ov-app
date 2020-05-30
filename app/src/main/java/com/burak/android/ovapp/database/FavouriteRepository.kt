@@ -2,7 +2,7 @@ package com.burak.android.ovapp.database
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.burak.android.ovapp.model.Favourite
+import com.burak.android.ovapp.model.favourites.Favourite
 
 class FavouriteRepository(context: Context) {
 
@@ -23,5 +23,5 @@ class FavouriteRepository(context: Context) {
 
     suspend fun deleteFavourite(game: Favourite) = favouriteDao.deleteFavourite(game)
 
-    suspend fun deleteAllFavourites() = favouriteDao.deleteAllGames()
+    suspend fun deleteAllFavourites() = favouriteDao.deleteAllFavourites()
 }

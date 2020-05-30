@@ -1,4 +1,4 @@
-package com.burak.android.ovapp.model
+package com.burak.android.ovapp.model.favourites
 
 import android.content.Context
 import android.view.LayoutInflater
