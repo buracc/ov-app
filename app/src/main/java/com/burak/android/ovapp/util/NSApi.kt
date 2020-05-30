@@ -1,4 +1,4 @@
-package com.burak.android.ovapp.util
+package com.burak.android.ovapp.repository
 
 object NSApi {
 }
