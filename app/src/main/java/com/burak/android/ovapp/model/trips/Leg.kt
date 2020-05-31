@@ -1,16 +1,20 @@
 package com.burak.android.ovapp.model.trips
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Leg(
     val cancelled: Boolean,
     val destination: Stop,
     val stops: List<Stop>
-) {
+) : Parcelable {
     fun getOrigin(): Stop {
         return stops.first()
     }
 
     fun getDepartureTime(): String? {
-        return destination.departure
+        return getOrigin().departure
     }
 
     fun getDeparturePlatform(): String? {

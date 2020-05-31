@@ -18,8 +18,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnFavourites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="@color/lightBlue"
+        android:text="@string/btn_favourites"
+        android:textColor="@color/white"
+        app:icon="@android:drawable/btn_star"
+        app:layout_constraintEnd_toEndOf="@+id/btnSearch"
+        app:layout_constraintStart_toStartOf="@+id/btnSearch"
+        app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
+
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardInsertGame"
+        android:id="@+id/cardMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -44,7 +58,7 @@
                 android:ems="10"
                 android:hint="@string/fromHint"
                 android:inputType="textPersonName"
-                android:text="Amsterdam Sloterdijk"
+                android:text="Groningen"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -163,9 +177,9 @@
         android:backgroundTint="@color/lightBlue"
         android:text="@android:string/search_go"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/cardInsertGame"
-        app:layout_constraintStart_toStartOf="@+id/cardInsertGame"
-        app:layout_constraintTop_toBottomOf="@+id/cardInsertGame" />
+        app:layout_constraintEnd_toEndOf="@+id/cardMain"
+        app:layout_constraintStart_toStartOf="@+id/cardMain"
+        app:layout_constraintTop_toBottomOf="@+id/cardMain" />
 
 
 

@@ -1,33 +1,34 @@
 package com.burak.android.ovapp.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.burak.android.ovapp.R
+import com.burak.android.ovapp.ui.favourites.FavouritesActivity
+import com.burak.android.ovapp.ui.trips.TripsActivity
+import com.burak.android.ovapp.util.DateUtil
 import com.burak.android.ovapp.util.NSApi
+import com.burak.android.ovapp.util.Routing
+import com.ethlo.time.ITU
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.time.DateTimeException
 import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-
+import java.time.ZoneOffset
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
-
-    val dateTimeFormatter = DateTimeFormatter
-        .ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'+02:00'")
-        .withZone(ZoneId.of("UTC"))
-    val dateTime = LocalDateTime.now(ZoneId.of("UTC"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val spType: Spinner = findViewById(R.id.spType)
+
         ArrayAdapter.createFromResource(
             this,
             R.array.types,
@@ -41,42 +42,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        ptDay.setText(dateTime.dayOfMonth.toString())
-        ptMonth.setText(dateTime.monthValue.toString())
-        ptYear.setText(dateTime.year.toString())
-        ptHours.setText(dateTime.hour.toString())
-        ptMinutes.setText(dateTime.minute.toString())
+        val now = LocalDateTime.now()
+        ptDay.setText(now.dayOfMonth.toString())
+        ptMonth.setText(now.monthValue.toString())
+        ptYear.setText(now.year.toString())
+        ptHours.setText(now.hour.toString())
+        ptMinutes.setText(now.minute.toString())
 
         btnSearch.setOnClickListener {
             search()
         }
-    }
 
-    private fun search() {
-        val origin = ptFrom.text.toString()
-        val destination = ptTo.text.toString()
-        val dateString = convertDate()
-
-        if (dateString != null) {
-            if (origin.isNotBlank()
-                && destination.isNotBlank()
-            ) {
-                GlobalScope.launch {
-                    val from = NSApi.getAllStations()[origin] ?: error("$origin not found")
-                    val to = NSApi.getAllStations()[destination] ?: error("$destination not found")
-
-                    println(NSApi.getTrips(from, to, dateString)[0])
-                }
-            } else {
-                Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_LONG).show()
-            }
+        btnFavourites.setOnClickListener {
+            val intent = Intent(this@MainActivity, FavouritesActivity::class.java)
+            startActivity(intent)
         }
     }
 
-    private fun convertDate(): String? {
-        var formattedDateTime: String? = null
+    private fun search() {
         try {
-            val selectedDateTime = LocalDateTime.of(
+            val origin = ptFrom.text.toString()
+            val destination = ptTo.text.toString()
+            val dateString = DateUtil.convertDate(
                 ptYear.text.toString().toInt(),
                 ptMonth.text.toString().toInt(),
                 ptDay.text.toString().toInt(),
@@ -84,11 +71,24 @@ class MainActivity : AppCompatActivity() {
                 ptMinutes.text.toString().toInt()
             )
 
-            formattedDateTime = selectedDateTime.format(dateTimeFormatter)
+            if (origin.isNotBlank()
+                && destination.isNotBlank()
+            ) {
+
+                GlobalScope.launch {
+                    startActivity(
+                        Routing.searchTrip(
+                            origin,
+                            destination,
+                            this@MainActivity
+                        ) { dateString }
+                    )
+                }
+            } else {
+                Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_LONG).show()
+            }
         } catch (e: DateTimeException) {
             Toast.makeText(this, "Invalid date entered!", Toast.LENGTH_LONG).show()
         }
-
-        return formattedDateTime
     }
 }

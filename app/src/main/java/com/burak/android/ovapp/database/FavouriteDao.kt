@@ -17,7 +17,7 @@ interface FavouriteDao {
     fun getAllFavourites(): LiveData<List<Favourite>>
 
     @Delete
-    suspend fun deleteFavourite(game: Favourite)
+    suspend fun deleteFavourite(favourite: Favourite)
 
     @Query("DELETE FROM Favourite")
     suspend fun deleteAllFavourites()

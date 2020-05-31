@@ -27,13 +27,14 @@ object NSApi {
                     val parsed = JsonParser.parseString(body.string()).asJsonObject
                     val payload = parsed.get("payload").asJsonArray
 
-                    payload.forEach {
-                        val obj = it.asJsonObject
+                    payload.forEach { o ->
+                        val obj = o.asJsonObject
                         val stationName = obj.get("namen").asJsonObject.get("lang").asString
                         val station = Station(
                             stationName,
                             obj.get("land").asString,
-                            obj.get("UICCode").asString
+                            obj.get("UICCode").asString,
+                            obj.get("synoniemen").asJsonArray.map { it.asString }
                         )
 
                         stations[stationName] = station
@@ -45,8 +46,8 @@ object NSApi {
         return stations
     }
 
-    fun getTrips(origin: Station, destination: Station, dateTime: String): List<Trip> {
-        val out = mutableListOf<Trip>()
+    fun getTrips(origin: Station, destination: Station, dateTime: String): ArrayList<Trip> {
+        val out = ArrayList<Trip>()
         val url =
             "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v3/trips?" +
                     "originTransit=false&originWalk=false&originBike=false&originCar=false&travelAssistanceTransferTime=0&" +
@@ -81,6 +82,9 @@ object NSApi {
                         val destinationStopJson = stopsJson
                             .first { it.asJsonObject.get("name").asString == destinationName }.asJsonObject
                         val destinationStation = getAllStations()[destinationName]
+                            ?: getAllStations()
+                                .values
+                                .firstOrNull { it.otherNames.contains(destinationName) }
 
                         if (destinationStation != null) {
                             val destinationStop = Stop(

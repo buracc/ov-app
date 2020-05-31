@@ -17,11 +17,11 @@ class FavouriteRepository(context: Context) {
         return favouriteDao.getAllFavourites()
     }
 
-    suspend fun insertFavourite(game: Favourite) {
-        favouriteDao.insertFavourite(game)
+    suspend fun insertFavourite(favourite: Favourite) {
+        favouriteDao.insertFavourite(favourite)
     }
 
-    suspend fun deleteFavourite(game: Favourite) = favouriteDao.deleteFavourite(game)
+    suspend fun deleteFavourite(favourite: Favourite) = favouriteDao.deleteFavourite(favourite)
 
     suspend fun deleteAllFavourites() = favouriteDao.deleteAllFavourites()
 }

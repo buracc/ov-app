@@ -6,4 +6,12 @@
     <string name="title">Plan your trip</string>
     <string name="fromHint">From…</string>
     <string name="toHint">To…</string>
+    <string name="from_to"><![CDATA[From -> To]]></string>
+    <string name="favourite_btn">Favourite</string>
+    <string name="direction">Direction:</string>
+    <string name="platform">Platform:</string>
+    <string name="arrival">Arrival:</string>
+    <string name="departure">Departure:</string>
+    <string name="btn_favourites">Favourites</string>
+    <string name="favourites">Favourites</string>
 </resources>
