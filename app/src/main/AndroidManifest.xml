@@ -11,11 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.search.trip.TripActivity"
+            android:label="Trip" />
+        <activity
             android:name=".ui.favourites.FavouritesActivity"
             android:label="Favourites" />
         <activity
-            android:name=".ui.trips.TripsActivity"
-            android:label="Trips" />
+            android:name=".ui.search.SearchActivity"
+            android:label="Trip Search" />
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

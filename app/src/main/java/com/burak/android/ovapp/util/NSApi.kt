@@ -5,6 +5,7 @@ import com.burak.android.ovapp.model.trips.Fare
 import com.burak.android.ovapp.model.trips.Leg
 import com.burak.android.ovapp.model.trips.Stop
 import com.burak.android.ovapp.model.trips.Trip
+import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -54,6 +55,7 @@ object NSApi {
                     "searchForAccessibleTrip=false&destinationTransit=false&destinationWalk=false&destinationBike=false&" +
                     "destinationCar=false&excludeHighSpeedTrains=false&excludeReservationRequired=false&passing=false&" +
                     "originUicCode=${origin.uicCode}&destinationUicCode=${destination.uicCode}&dateTime=$dateTime"
+
         val request = requestBase.url(url).build()
 
         val arrivalKey = "plannedArrivalDateTime"
@@ -89,13 +91,8 @@ object NSApi {
                         if (destinationStation != null) {
                             val destinationStop = Stop(
                                 destinationStation,
-                                arrival = if (destinationStopJson.has(arrivalKey))
-                                    destinationStopJson.get(arrivalKey).asString
-                                else null,
-
-                                arrivalTrack = if (destinationStopJson.has(arrivalTrackKey))
-                                    destinationStopJson.get(arrivalTrackKey).asString
-                                else null
+                                arrival = getFieldValue(destinationStopJson, arrivalKey),
+                                arrivalTrack = getFieldValue(destinationStopJson, arrivalTrackKey)
                             )
 
                             val stops = mutableListOf<Stop>()
@@ -107,21 +104,10 @@ object NSApi {
                                 if (stopStation != null) {
                                     val stop = Stop(
                                         stopStation,
-                                        arrival = if (stopJson.has(arrivalKey))
-                                            stopJson.get(arrivalKey).asString
-                                        else null,
-
-                                        arrivalTrack = if (stopJson.has(arrivalTrackKey))
-                                            stopJson.get(arrivalTrackKey).asString
-                                        else null,
-
-                                        departure = if (stopJson.has(departureKey))
-                                            stopJson.get(departureKey).asString
-                                        else null,
-
-                                        departureTrack = if (stopJson.has(departureTrackKey))
-                                            stopJson.get(departureTrackKey).asString
-                                        else null
+                                        arrival = getFieldValue(stopJson, arrivalKey),
+                                        arrivalTrack = getFieldValue(stopJson, arrivalTrackKey),
+                                        departure = getFieldValue(stopJson, departureKey),
+                                        departureTrack = getFieldValue(stopJson, departureTrackKey)
                                     )
 
                                     stops.add(stop)
@@ -140,14 +126,17 @@ object NSApi {
                     val fares = mutableListOf<Fare>()
                     jsonFares.forEach { f ->
                         val fareJson = f.asJsonObject
-                        val fare = Fare(
-                            fareJson.get("priceInCents").asInt,
-                            fareJson.get("product").asString,
-                            fareJson.get("travelClass").asString,
-                            fareJson.get("discountType").asString
-                        )
+                        val productString = fareJson.get("product").asString
+                        if (productString.startsWith("OVCHIPKAART")) {
+                            val fare = Fare(
+                                fareJson.get("priceInCents").asInt,
+                                productString,
+                                fareJson.get("travelClass").asString,
+                                fareJson.get("discountType").asString
+                            )
 
-                        fares.add(fare)
+                            fares.add(fare)
+                        }
                     }
 
                     out.add(Trip(legs, fares))
@@ -156,5 +145,18 @@ object NSApi {
         }
 
         return out
+    }
+
+    private fun getFieldValue(json: JsonObject, planned: String): String? {
+        val actual = planned.replace("planned", "actual")
+        if (json.has(actual)) {
+            return json.get(actual).asString
+        }
+
+        if (json.has(planned)) {
+            return json.get(planned).asString
+        }
+
+        return null
     }
 }

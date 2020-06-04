@@ -1,4 +1,4 @@
-package com.burak.android.ovapp.model.trips.adapter
+package com.burak.android.ovapp.model.trips.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,20 +7,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.burak.android.ovapp.R
 import com.burak.android.ovapp.model.trips.Trip
-import com.ethlo.time.ITU
-import kotlinx.android.synthetic.main.trip_card.view.*
-import java.lang.StringBuilder
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import com.burak.android.ovapp.util.DateUtil
+import kotlinx.android.synthetic.main.search_card.view.*
 
-class TripAdapter(val trips: List<Trip>) : RecyclerView.Adapter<TripAdapter.ViewHolder>() {
+class TripAdapter(
+    val trips: List<Trip>,
+    val listener: (Trip) -> Unit
+) : RecyclerView.Adapter<TripAdapter.ViewHolder>() {
     lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
 
         return ViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.trip_card, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.search_card, parent, false)
         )
     }
 
@@ -30,24 +30,26 @@ class TripAdapter(val trips: List<Trip>) : RecyclerView.Adapter<TripAdapter.View
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(trips[position])
+        holder.itemView.setOnClickListener {
+            trips[position].let {
+                listener.invoke(it)
+            }
+        }
     }
 
     inner class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
         fun bind(trip: Trip) {
-            val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT, FormatStyle.SHORT)
             var departureTime = trip.getDepartureTime()
             var arrivalTime = trip.getArrivalTime()
 
             if (departureTime != null) {
-                val correctFormat = StringBuilder(departureTime).insert(departureTime.length - 2, ":")
-                departureTime = ITU.parseDateTime(correctFormat.toString()).format(formatter)
+                departureTime = DateUtil.toTimeString(departureTime)
             }
 
             if (arrivalTime != null) {
-                val correctFormat = StringBuilder(arrivalTime).insert(arrivalTime.length - 2, ":")
-                arrivalTime = ITU.parseDateTime(correctFormat.toString()).format(formatter)
+                arrivalTime = DateUtil.toTimeString(arrivalTime)
             }
 
             itemView.tvDirection.text = trip.getDirection().station.name

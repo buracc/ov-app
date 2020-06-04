@@ -1,4 +1,4 @@
-package com.burak.android.ovapp.ui.trips
+package com.burak.android.ovapp.ui.search
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TripsViewModel(application: Application) : AndroidViewModel(application) {
+class SearchViewModel(application: Application) : AndroidViewModel(application) {
     private val ioScope = CoroutineScope(Dispatchers.IO)
     private val favouriteRepository = FavouriteRepository(application.applicationContext)
 

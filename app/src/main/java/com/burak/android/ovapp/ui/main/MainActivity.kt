@@ -8,18 +8,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.burak.android.ovapp.R
 import com.burak.android.ovapp.ui.favourites.FavouritesActivity
-import com.burak.android.ovapp.ui.trips.TripsActivity
 import com.burak.android.ovapp.util.DateUtil
-import com.burak.android.ovapp.util.NSApi
 import com.burak.android.ovapp.util.Routing
-import com.ethlo.time.ITU
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.time.DateTimeException
 import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         try {
             val origin = ptFrom.text.toString()
             val destination = ptTo.text.toString()
-            val dateString = DateUtil.convertDate(
+            val dateTime = DateUtil.createDate(
                 ptYear.text.toString().toInt(),
                 ptMonth.text.toString().toInt(),
                 ptDay.text.toString().toInt(),
@@ -74,14 +69,14 @@ class MainActivity : AppCompatActivity() {
             if (origin.isNotBlank()
                 && destination.isNotBlank()
             ) {
-
                 GlobalScope.launch {
                     startActivity(
                         Routing.searchTrip(
                             origin,
                             destination,
-                            this@MainActivity
-                        ) { dateString }
+                            this@MainActivity,
+                            dateTime
+                        )
                     )
                 }
             } else {

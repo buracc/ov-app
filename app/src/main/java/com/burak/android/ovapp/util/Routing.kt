@@ -2,32 +2,26 @@ package com.burak.android.ovapp.util
 
 import android.content.Context
 import android.content.Intent
-import com.burak.android.ovapp.ui.trips.TripsActivity
-import java.time.LocalDateTime
+import com.burak.android.ovapp.ui.search.SearchActivity
+import java.time.OffsetDateTime
 
 object Routing {
     fun searchTrip(
         origin: String,
         destination: String,
         context: Context,
-        dateString: () -> String = {
-            val localDateTime = LocalDateTime.now()
-            DateUtil.convertDate(
-                localDateTime.year,
-                localDateTime.monthValue,
-                localDateTime.dayOfMonth,
-                localDateTime.hour,
-                localDateTime.minute
-            )
-        }
+        dateTime: OffsetDateTime = OffsetDateTime.now()
     ): Intent {
         val from = NSApi.getAllStations()[origin] ?: error("$origin not found")
         val to = NSApi.getAllStations()[destination] ?: error("$destination not found")
+        val formattedDate = dateTime.toZonedDateTime().toString()
 
-        val intent = Intent(context, TripsActivity::class.java)
-        intent.putParcelableArrayListExtra("trips", NSApi.getTrips(from, to, dateString.invoke()))
+        val intent = Intent(context, SearchActivity::class.java)
+        intent.putParcelableArrayListExtra("trips", NSApi.getTrips(from, to, formattedDate))
         intent.putExtra("from", origin)
         intent.putExtra("to", destination)
+        intent.putExtra("dateTime", DateUtil.toDateTimeString(dateTime))
+
         return intent
     }
 }

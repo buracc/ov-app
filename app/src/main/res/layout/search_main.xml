@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary">
 
     <TextView
-        android:id="@+id/tvTripsTitle"
+        android:id="@+id/tvSearchTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardTripsMain"
+        android:id="@+id/cardSearchMain"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
@@ -32,10 +32,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTripsTitle">
+        app:layout_constraintTop_toBottomOf="@+id/tvSearchTitle">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTrips"
+            android:id="@+id/rvSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -53,9 +53,26 @@
         android:textColor="@color/white"
         app:icon="@android:drawable/btn_star"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/cardTripsMain"
-        app:layout_constraintStart_toStartOf="@+id/cardTripsMain"
-        app:layout_constraintTop_toBottomOf="@+id/cardTripsMain" />
+        app:layout_constraintEnd_toEndOf="@+id/cardSearchMain"
+        app:layout_constraintStart_toStartOf="@+id/cardSearchMain"
+        app:layout_constraintTop_toBottomOf="@+id/cardSearchMain" />
+
+    <TextView
+        android:id="@+id/tvSearchDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        app:layout_constraintEnd_toEndOf="@+id/tvSearchTitle"
+        app:layout_constraintStart_toStartOf="@+id/tvSearchTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvSearchTitle" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Query: "
+        app:layout_constraintEnd_toStartOf="@+id/tvSearchDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvSearchTitle" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.burak.android.ovapp.R
 import com.burak.android.ovapp.model.favourites.Favourite
-import com.burak.android.ovapp.model.favourites.adapter.FavouriteAdapter
+import com.burak.android.ovapp.model.favourites.adapters.FavouriteAdapter
 import com.burak.android.ovapp.util.Routing
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.favourites_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+@Suppress("DEPRECATION")
 class FavouritesActivity : AppCompatActivity() {
 
     private lateinit var favouritesViewModel: FavouritesViewModel
