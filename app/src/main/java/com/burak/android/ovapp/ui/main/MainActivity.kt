@@ -6,13 +6,18 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.burak.android.ovapp.R
+import com.burak.android.ovapp.exception.StationNotFoundException
 import com.burak.android.ovapp.ui.favourites.FavouritesActivity
+import com.burak.android.ovapp.ui.search.SearchActivity
+import com.burak.android.ovapp.ui.search.SearchViewModel
 import com.burak.android.ovapp.util.DateUtil
+import com.burak.android.ovapp.util.NSApi
 import com.burak.android.ovapp.util.Routing
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.lang.IllegalStateException
 import java.time.DateTimeException
 import java.time.LocalDateTime
 
@@ -22,15 +27,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         val spType: Spinner = findViewById(R.id.spType)
 
         ArrayAdapter.createFromResource(
             this,
             R.array.types,
             android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spType.adapter = adapter
+        ).also {
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spType.adapter = it
         }
 
         initViews()
@@ -69,21 +75,36 @@ class MainActivity : AppCompatActivity() {
             if (origin.isNotBlank()
                 && destination.isNotBlank()
             ) {
-                GlobalScope.launch {
-                    startActivity(
-                        Routing.searchTrip(
-                            origin,
-                            destination,
-                            this@MainActivity,
-                            dateTime
+
+                GlobalScope.launch(Dispatchers.Main) {
+                    try {
+                        val from = NSApi.getStationByName(origin)
+                        val to = NSApi.getStationByName(destination)
+                        val trips = NSApi.getTrips(from, to, dateTime.toZonedDateTime().toString())
+
+                        startActivity(
+                            Intent(this@MainActivity, SearchActivity::class.java)
+                                .putParcelableArrayListExtra("trips", trips)
+                                .putExtra("from", origin)
+                                .putExtra("to", destination)
+                                .putExtra("dateTime", DateUtil.toDateTimeString(dateTime))
                         )
-                    )
+                    } catch (e: StationNotFoundException) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Station ${e.message} not found.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
                 }
+
             } else {
-                Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "Please fill in all fields.", Toast.LENGTH_LONG)
+                    .show()
             }
         } catch (e: DateTimeException) {
-            Toast.makeText(this, "Invalid date entered!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Invalid date entered!", Toast.LENGTH_LONG).show()
         }
     }
 }

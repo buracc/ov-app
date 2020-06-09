@@ -23,7 +23,7 @@ class FavouritesActivity : AppCompatActivity() {
     private val favourites = mutableListOf<Favourite>()
     private val favouriteAdapter = FavouriteAdapter(favourites) {
         GlobalScope.launch {
-            startActivity(Routing.searchTrip(it.from, it.to, this@FavouritesActivity))
+//            startActivity(Routing.searchTrip(it.from, it.to, this@FavouritesActivity))
         }
     }
 
