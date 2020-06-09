@@ -1,6 +1,8 @@
 package com.burak.android.ovapp.ui.favourites
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -8,13 +10,18 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.burak.android.ovapp.R
+import com.burak.android.ovapp.exception.StationNotFoundException
 import com.burak.android.ovapp.model.favourites.Favourite
 import com.burak.android.ovapp.model.favourites.adapters.FavouriteAdapter
-import com.burak.android.ovapp.util.Routing
+import com.burak.android.ovapp.ui.search.SearchActivity
+import com.burak.android.ovapp.util.DateUtil
+import com.burak.android.ovapp.util.NSApi
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.favourites_main.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.time.OffsetDateTime
 
 @Suppress("DEPRECATION")
 class FavouritesActivity : AppCompatActivity() {
@@ -22,8 +29,27 @@ class FavouritesActivity : AppCompatActivity() {
     private lateinit var favouritesViewModel: FavouritesViewModel
     private val favourites = mutableListOf<Favourite>()
     private val favouriteAdapter = FavouriteAdapter(favourites) {
-        GlobalScope.launch {
-//            startActivity(Routing.searchTrip(it.from, it.to, this@FavouritesActivity))
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val from = NSApi.getStationByName(it.from)
+                val to = NSApi.getStationByName(it.to)
+                val dateTime = OffsetDateTime.now().toZonedDateTime().toString()
+                val trips = NSApi.getTrips(from, to, dateTime)
+
+                startActivity(
+                    Intent(this@FavouritesActivity, SearchActivity::class.java)
+                        .putParcelableArrayListExtra("trips", trips)
+                        .putExtra("from", it.from)
+                        .putExtra("to", it.to)
+                        .putExtra("dateTime", DateUtil.toDateTimeString(dateTime, false))
+                )
+            } catch (e: StationNotFoundException) {
+                Toast.makeText(
+                    this@FavouritesActivity,
+                    "Station ${e.message} not found.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 

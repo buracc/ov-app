@@ -6,18 +6,14 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
 import com.burak.android.ovapp.R
 import com.burak.android.ovapp.exception.StationNotFoundException
 import com.burak.android.ovapp.ui.favourites.FavouritesActivity
 import com.burak.android.ovapp.ui.search.SearchActivity
-import com.burak.android.ovapp.ui.search.SearchViewModel
 import com.burak.android.ovapp.util.DateUtil
 import com.burak.android.ovapp.util.NSApi
-import com.burak.android.ovapp.util.Routing
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
-import java.lang.IllegalStateException
 import java.time.DateTimeException
 import java.time.LocalDateTime
 

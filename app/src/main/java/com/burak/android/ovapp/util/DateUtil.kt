@@ -21,16 +21,20 @@ object DateUtil {
         return parseString(dateTime).format(getTimeFormatter())
     }
 
-    fun toDateTimeString(dateTime: String): String {
-        return parseString(dateTime).format(getDateTimeFormatter())
+    fun toDateTimeString(dateTime: String, formatting: Boolean = true): String {
+        return parseString(dateTime, formatting).format(getDateTimeFormatter())
     }
 
     fun toDateTimeString(dateTime: OffsetDateTime): String {
         return dateTime.format(getDateTimeFormatter())
     }
 
-    fun parseString(dateTime: String): OffsetDateTime {
-        return ITU.parseDateTime(correctFormatting(dateTime))
+    fun parseString(dateTime: String, formatting: Boolean = true): OffsetDateTime {
+        if (formatting) {
+            return ITU.parseDateTime(correctFormatting(dateTime))
+        }
+
+        return ITU.parseDateTime(dateTime)
     }
 
     fun getTravelTimeMinutes(a: OffsetDateTime, b: OffsetDateTime): Long {
