@@ -18,7 +18,7 @@ object NSApi {
     private val stations = mutableMapOf<String, Station>()
     private val client = OkHttpClient()
     private val requestBase = Request.Builder()
-        .addHeader("Ocp-Apim-Subscription-Key", Credentials.apiKey)
+        .addHeader("Ocp-Apim-Subscription-Key", Credentials.NS_APP_PRIMARY_API_KEY)
 
     suspend fun getStationByName(name: String): Station {
         return withContext(Dispatchers.IO) {
@@ -36,7 +36,8 @@ object NSApi {
                 val body = response.body
                 if (body != null) {
                     val parsed = JsonParser.parseString(body.string()).asJsonObject
-                    val payload = parsed.get("payload").asJsonArray
+                    println(parsed)
+                    val payload = parsed.get("payload")?.asJsonArray ?: return emptyMap()
 
                     payload.forEach { o ->
                         val obj = o.asJsonObject
