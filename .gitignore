@@ -88,5 +88,4 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 .idea
-app/src/main/java/com/burak/android/ovapp/util/Credentials.kt
-app/src/main/java/com/burak/android/ovapp/util/Credentials.kt
+app/src/main/java/dev/burak/android/ovapp/util/Credentials.kt
