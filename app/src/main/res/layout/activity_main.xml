@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+                                                   xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
@@ -17,20 +16,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnFavourites"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="@color/lightBlue"
-        android:text="@string/btn_favourites"
-        android:textColor="@color/white"
-        app:icon="@android:drawable/btn_star"
-        app:layout_constraintEnd_toEndOf="@+id/btnSearch"
-        app:layout_constraintStart_toStartOf="@+id/btnSearch"
-        app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardMain"
@@ -47,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/ptFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,12 +43,11 @@
                 android:ems="10"
                 android:hint="@string/fromHint"
                 android:inputType="textPersonName"
-                android:text="Groningen"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/ptTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,61 +56,55 @@
                 android:ems="10"
                 android:hint="@string/toHint"
                 android:inputType="textPersonName"
-                android:text="Hilversum"
                 app:layout_constraintEnd_toEndOf="@+id/ptFrom"
                 app:layout_constraintStart_toStartOf="@+id/ptFrom"
                 app:layout_constraintTop_toBottomOf="@+id/ptFrom" />
 
 
             <EditText
-                android:id="@+id/ptHours"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:hint="Hour"
-                android:inputType="time"
-                android:maxLength="2"
-                app:layout_constraintEnd_toEndOf="@+id/ptDay"
-                app:layout_constraintStart_toStartOf="@+id/ptDay"
-                app:layout_constraintTop_toBottomOf="@+id/ptYear" />
+                    android:id="@+id/ptHours"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="@string/hour"
+                    android:inputType="time"
+                    android:maxLength="2"
+                    app:layout_constraintTop_toBottomOf="@+id/ptYear"
+                    app:layout_constraintStart_toStartOf="@+id/spType"
+                    app:layout_constraintBottom_toTopOf="@+id/spType" android:layout_marginBottom="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/ptDay"/>
 
             <EditText
-                android:id="@+id/ptMinutes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:hint="Minute"
-                android:inputType="time"
-                android:maxLength="2"
-                app:layout_constraintEnd_toEndOf="@+id/ptMonth"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/ptMonth"
-                app:layout_constraintTop_toBottomOf="@+id/ptYear" />
-
+                    android:id="@+id/ptMinutes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/minute"
+                    android:inputType="time"
+                    android:maxLength="2"
+                    app:layout_constraintStart_toEndOf="@+id/tvTimeSeparator"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTimeSeparator"
+                    app:layout_constraintTop_toTopOf="@+id/ptHours" app:layout_constraintEnd_toEndOf="@+id/ptMonth"/>
             <Spinner
-                android:id="@+id/spType"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/ptTo"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/ptTo"
-                app:layout_constraintTop_toBottomOf="@+id/ptMinutes" />
+                    android:id="@+id/spType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ptTo"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/tvType" android:layout_marginStart="8dp"/>
 
             <EditText
-                android:id="@+id/ptDay"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="Day"
-                android:inputType="date"
-                android:maxLength="2"
-                app:layout_constraintStart_toStartOf="@+id/ptTo"
-                app:layout_constraintTop_toBottomOf="@+id/ptTo" />
+                    android:id="@+id/ptDay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/day"
+                    android:inputType="date"
+                    android:maxLength="2"
+                    app:layout_constraintTop_toBottomOf="@+id/ptTo"
+                    android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="@+id/spType"/>
 
             <EditText
                 android:id="@+id/ptMonth"
@@ -134,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:hint="Month"
+                android:hint="@string/month"
                 android:inputType="date"
                 android:maxLength="2"
                 app:layout_constraintStart_toEndOf="@+id/ptDay"
@@ -146,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:hint="Year"
+                android:hint="@string/year"
                 android:inputType="date"
                 android:maxLength="4"
                 app:layout_constraintEnd_toEndOf="@+id/ptTo"
@@ -154,19 +132,39 @@
                 app:layout_constraintTop_toBottomOf="@+id/ptTo" />
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textSize="36sp"
-                app:layout_constraintBottom_toTopOf="@+id/spType"
-                app:layout_constraintEnd_toStartOf="@+id/ptMinutes"
-                app:layout_constraintStart_toEndOf="@+id/ptHours"
-                app:layout_constraintTop_toBottomOf="@+id/ptMonth" />
+                    android:id="@+id/tvTimeSeparator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon"
+                    android:textSize="36sp"
+                    app:layout_constraintStart_toEndOf="@+id/ptHours"
+                    app:layout_constraintBottom_toBottomOf="@+id/ptHours"
+                    app:layout_constraintTop_toTopOf="@+id/ptHours"/>
+            <TextView
+                    android:text="@string/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/tvDate"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintEnd_toEndOf="@+id/tvTime"
+                    app:layout_constraintStart_toStartOf="@+id/tvType"
+                    app:layout_constraintBottom_toBottomOf="@+id/ptDay" android:layout_marginBottom="8dp"/>
+            <TextView
+                    android:text="@string/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/tvTime"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintStart_toStartOf="@+id/tvType"
+                    app:layout_constraintBottom_toBottomOf="@+id/ptHours" android:layout_marginBottom="8dp"/>
+            <TextView
+                    android:text="@string/type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/tvType"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/spType"
+                    android:layout_marginStart="16dp" android:layout_marginBottom="2dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </com.google.android.material.card.MaterialCardView>
 
     <Button
@@ -181,7 +179,19 @@
         app:layout_constraintStart_toStartOf="@+id/cardMain"
         app:layout_constraintTop_toBottomOf="@+id/cardMain" />
 
-
+    <Button
+            android:id="@+id/btnFavourites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="#FFFFFF"
+            android:backgroundTint="@color/lightBlue"
+            android:text="@string/btn_favourites"
+            android:textColor="@color/white"
+            app:icon="@android:drawable/btn_star"
+            app:layout_constraintEnd_toEndOf="@+id/btnSearch"
+            app:layout_constraintStart_toStartOf="@+id/btnSearch"
+            app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
