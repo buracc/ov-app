@@ -50,36 +50,36 @@ dependencies {
     androidTestImplementation(Dependencies.androidTestLibraries)
 
     // Material
-    implementation("com.google.android.material:material:1.3.0")
+    implementation(group = "com.google.android.material", name = "material", version = "1.3.0")
 
     // Room
-    implementation("androidx.room:room-runtime:2.3.0")
-    kapt("androidx.room:room-compiler:2.3.0")
-    implementation("androidx.room:room-ktx:2.3.0")
+    implementation(group = "androidx.room", name = "room-runtime", version = "2.3.0")
+    kapt(group = "androidx.room", name = "room-compiler", version = "2.3.0")
+    implementation(group = "androidx.room", name = "room-ktx", version = "2.3.0")
 
     // ViewModel and LiveData
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation(group = "androidx.lifecycle", name = "lifecycle-extensions", version = "2.2.0")
+    implementation(group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version = "2.3.1")
 
     //noinspection GradleCompatible
-    implementation("com.android.support:cardview-v7:28.0.0")
+    implementation(group = "com.android.support", name = "cardview-v7", version = "28.0.0")
 
 
     // Http
     implementation(group = "com.squareup.retrofit2", name = "retrofit", version = "2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(group = "com.squareup.retrofit2", name = "converter-gson", version = "2.9.0")
 
     // Etc
     implementation(group = "com.ethlo.time", name = "itu", version = "1.3.0")
     implementation(group = "com.google.code.gson", name = "gson", version = "2.8.6")
 
     // DI
-    implementation("com.google.dagger:hilt-android:2.35.1")
-    kapt("com.google.dagger:hilt-compiler:2.35.1")
+    implementation(group = "com.google.dagger", name = "hilt-android", version = "2.35.1")
+    kapt(group = "com.google.dagger", name = "hilt-compiler", version = "2.35.1")
 
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.35.1")
-    kaptAndroidTest("com.google.dagger:hilt-compiler:2.35.1")
+    androidTestImplementation(group = "com.google.dagger", name = "hilt-android-testing", version = "2.35.1")
+    kaptAndroidTest(group = "com.google.dagger", name = "hilt-compiler", version = "2.35.1")
 
-    testImplementation("com.google.dagger:hilt-android-testing:2.35.1")
-    kaptTest("com.google.dagger:hilt-compiler:2.35.1")
+    testImplementation(group = "com.google.dagger", name = "hilt-android-testing", version = "2.35.1")
+    kaptTest(group = "com.google.dagger", name = "hilt-compiler", version = "2.35.1")
 }
