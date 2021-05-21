@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -10,7 +11,7 @@ android {
     buildToolsVersion(AndroidConfig.buildToolsVersion)
 
     defaultConfig {
-        applicationId = "dev.burak.android.ovapp"
+        applicationId = "dev.burak.ovapp"
         minSdkVersion(AndroidConfig.minSdk)
         targetSdkVersion(AndroidConfig.targetSdk)
         versionCode = AndroidConfig.versionCode
@@ -30,6 +31,15 @@ android {
 
     androidExtensions {
         isExperimental = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
@@ -54,8 +64,22 @@ dependencies {
     //noinspection GradleCompatible
     implementation("com.android.support:cardview-v7:28.0.0")
 
-    // Extras
-    implementation(group = "com.google.code.gson", name = "gson", version = "2.8.6")
-    implementation(group = "com.squareup.okhttp3", name = "okhttp", version = "4.7.2")
+
+    // Http
+    implementation(group = "com.squareup.retrofit2", name = "retrofit", version = "2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Etc
     implementation(group = "com.ethlo.time", name = "itu", version = "1.3.0")
+    implementation(group = "com.google.code.gson", name = "gson", version = "2.8.6")
+
+    // DI
+    implementation("com.google.dagger:hilt-android:2.35.1")
+    kapt("com.google.dagger:hilt-compiler:2.35.1")
+
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.35.1")
+    kaptAndroidTest("com.google.dagger:hilt-compiler:2.35.1")
+
+    testImplementation("com.google.dagger:hilt-android-testing:2.35.1")
+    kaptTest("com.google.dagger:hilt-compiler:2.35.1")
 }

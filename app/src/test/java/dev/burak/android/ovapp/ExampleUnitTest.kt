@@ -1,4 +1,4 @@
-package dev.burak.android.ovapp
+package dev.burak.ovapp
 
 import org.junit.Test
 
