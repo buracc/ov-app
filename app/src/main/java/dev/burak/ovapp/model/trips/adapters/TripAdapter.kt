@@ -39,8 +39,9 @@ class TripAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(trip: Trip) {
-            var departureTime = trip.getDepartureTime()
             var arrivalTime = trip.getArrivalTime()
+            var departureTime = trip.getDepartureTime()
+
             if (arrivalTime != "Unknown") {
                 arrivalTime = DateUtil.toTimeString(arrivalTime)
             }
@@ -49,9 +50,9 @@ class TripAdapter(
                 departureTime = DateUtil.toTimeString(departureTime)
             }
 
-            itemView.tvDirection.text = trip.getDirection().name
-            itemView.tvDeparture.text = departureTime
+            itemView.tvDirection.text = trip.getDirection().name ?: "Unknown"
             itemView.tvArrival.text = arrivalTime
+            itemView.tvDeparture.text = departureTime
             itemView.tvPlatform.text = trip.getStartPlatform()
         }
     }

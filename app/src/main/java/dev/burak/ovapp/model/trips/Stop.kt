@@ -15,7 +15,11 @@ data class Stop(
     private val actualDepartureTrack: String?,
     private val plannedDepartureTrack: String?,
     private val plannedDepartureDateTime: String?,
-    private val actualDepartureDateTime: String?
+    private val actualDepartureDateTime: String?,
+    private val plannedTrack: String?,
+    private val plannedDateTime: String?,
+    private val actualTrack: String?,
+    private val actualDateTime: String?,
 ) : Parcelable {
     val arrivalTrack: String
         get() = actualArrivalTrack ?: plannedArrivalTrack ?: "Unknown"
@@ -25,4 +29,15 @@ data class Stop(
         get() = actualDepartureTrack ?: plannedDepartureTrack ?: "Unknown"
     val departureDateTime: String
         get() = actualDepartureDateTime ?: plannedDepartureDateTime ?: "Unknown"
+
+    val track: String
+        get() = actualTrack ?: plannedTrack ?: "Unknown"
+    val dateTime: String
+        get() = actualDateTime ?: plannedDateTime ?: "Unknown"
+
+    override fun toString(): String {
+        return "Stop(name=$name, arrivalTrack='$arrivalTrack', arrivalDateTime='$arrivalDateTime', departureTrack='$departureTrack', departureDateTime='$departureDateTime', track='$track', dateTime='$dateTime')"
+    }
+
+
 }

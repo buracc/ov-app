@@ -6,9 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Trip(
-    @SerializedName("legs")
     val legs: List<Leg>,
-    @SerializedName("fares")
     val fares: List<Fare>
 ): Parcelable {
     fun getFirstLeg(): Leg {
@@ -32,6 +30,6 @@ data class Trip(
     }
 
     fun getDirection(): Stop {
-        return getFirstLeg().getDirection()
+        return getFirstLeg().destination
     }
 }

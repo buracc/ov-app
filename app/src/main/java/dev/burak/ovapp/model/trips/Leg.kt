@@ -6,40 +6,32 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Leg(
-    @SerializedName("cancelled")
     val cancelled: Boolean,
-    @SerializedName("stops")
-    val stops: List<Stop>
+    val stops: List<Stop>,
+    val origin: Stop,
+    val destination: Stop
 ) : Parcelable {
-    fun getOrigin(): Stop {
-        return stops.first()
-    }
-
     fun getDepartureTime(): String {
-        return getOrigin().departureDateTime
+        return origin.dateTime
     }
 
     fun getDeparturePlatform(): String {
-        return getOrigin().departureTrack
+        return origin.track
     }
 
     fun getArrivalPlatform(): String {
-        return getDirection().arrivalTrack
+        return destination.track
     }
 
     fun getArrivalTime(): String {
-        return getDirection().arrivalDateTime
-    }
-
-    fun getDirection(): Stop {
-        return stops.last()
+        return destination.dateTime
     }
 
     override fun toString(): String {
         return "Leg: \n " +
                 "Cancelled: $cancelled \n " +
-                "Origin: ${getOrigin()} \n" +
-                "Destination: ${getDirection()} \n " +
-                "Stops: ${stops.toString().replace(", ", " -> ")} \n"
+                "Origin: $origin \n" +
+                "Destination: $destination \n " +
+                "Stops: ${stops.map { it.name }.toString().replace(", ", " -> ")} \n"
     }
 }

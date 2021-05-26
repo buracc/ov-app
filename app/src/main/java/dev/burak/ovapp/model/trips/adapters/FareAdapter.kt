@@ -35,7 +35,7 @@ class FareAdapter(val fares: List<Fare>) : RecyclerView.Adapter<FareAdapter.View
         fun bind(fare: Fare) {
             itemView.tvProduct.text = fare.product
             itemView.tvPrice.text = "$euro${(fare.priceCents.toDouble() / 100)}"
-            itemView.tvTravelClass.text = fare.travelClass
+            itemView.tvClass.text = fare.travelClass
             itemView.tvDiscount.text = fare.discountType
         }
     }

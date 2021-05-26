@@ -54,7 +54,12 @@ class MainActivity : AppCompatActivity() {
     private fun initViews() {
         val now = LocalDateTime.now()
         ptDate.text = "${now.dayOfMonth}-${now.monthValue}-${now.year}"
-        ptTime.text = "${now.hour}:${now.minute}"
+        val min = if (now.minute < 10) {
+            "0${now.minute}"
+        } else {
+            now.minute.toString()
+        }
+        ptTime.text = "${now.hour}:${min}"
 
         btnSearch.setOnClickListener {
             if (search()) {
@@ -122,10 +127,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             GlobalScope.launch(Dispatchers.IO) {
-                val request = ovApi.getTrips(
+                val response = ovApi.getTrips(
                     origin.uicCode, destination.uicCode, dateTime.toZonedDateTime().toString()
                 )
-                val trips = request.body()?.trips ?: return@launch
+
+                println(response.body())
+
+                val trips = response.body()?.trips ?: return@launch
                 startActivity(
                     Intent(this@MainActivity, SearchActivity::class.java)
                         .putParcelableArrayListExtra("trips", arrayListOf<Trip>().also {
