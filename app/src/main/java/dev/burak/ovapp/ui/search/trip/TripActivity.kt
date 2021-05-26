@@ -33,6 +33,7 @@ class TripActivity : AppCompatActivity() {
                 val arrivalTime = DateUtil.parseString(trip.getArrivalTime())
                 val diffMinutes = DateUtil.getTravelTimeMinutes(departureTime, arrivalTime)
 
+                tvStartPlatform.text = trip.getStartPlatform()
                 tvDeparture.text = DateUtil.toTimeString(trip.getDepartureTime())
                 tvArrival.text = DateUtil.toTimeString(trip.getArrivalTime())
                 tvTravelTime.text = "$diffMinutes minutes"

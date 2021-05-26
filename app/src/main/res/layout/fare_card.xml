@@ -53,48 +53,44 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvPrice2" />
 
             <TextView
-                android:id="@+id/tvDiscount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="discount"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvPrice3"
-                app:layout_constraintTop_toBottomOf="@+id/tvPrice2" />
+                    android:id="@+id/tvDiscount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="discount"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPrice2"
+                    app:layout_constraintStart_toStartOf="@+id/tvClass"/>
 
             <TextView
-                android:id="@+id/tvProduct"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="product"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                android:textStyle="italic"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="parent" />
+                    android:id="@+id/tvProduct"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="product"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="@+id/tvPrice"/>
 
             <TextView
-                android:id="@+id/tvPrice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="price"
-                app:layout_constraintStart_toEndOf="@+id/tvPrice4"
-                app:layout_constraintTop_toBottomOf="@+id/tvProduct" />
+                    android:id="@+id/tvPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="price"
+                    app:layout_constraintTop_toBottomOf="@+id/tvProduct"
+                    app:layout_constraintStart_toStartOf="@+id/tvClass"/>
 
             <TextView
-                android:id="@+id/tvClass"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="class"
-                app:layout_constraintStart_toEndOf="@+id/tvPrice2"
-                app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
+                    android:id="@+id/tvClass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="class"
+                    app:layout_constraintStart_toEndOf="@+id/tvPrice2"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPrice4"/>
 
             <TextView
                 android:id="@+id/textView2"

@@ -30,7 +30,8 @@
                     android:layout_marginStart="8dp"
                     android:text="Arrival:"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDepInfo" android:textColor="@android:color/black"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tvDepInfo" android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toEndOf="@+id/textView2"/>
 
             <TextView
                     android:id="@+id/tvArrInfo"
@@ -40,7 +41,7 @@
                     android:text="arrivalInfo"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvPrice2"
-                    app:layout_constraintStart_toStartOf="@+id/tvPrice2"/>
+                    app:layout_constraintStart_toStartOf="@+id/tvArrStation"/>
 
             <TextView
                     android:id="@+id/tvDepStation"
@@ -63,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:text="departureInfo"
                     app:layout_constraintTop_toBottomOf="@+id/tvDepStation"
-                    app:layout_constraintStart_toStartOf="@+id/textView2"/>
+                    app:layout_constraintStart_toStartOf="@+id/tvDepStation"/>
 
             <TextView
                     android:id="@+id/tvArrStation"
