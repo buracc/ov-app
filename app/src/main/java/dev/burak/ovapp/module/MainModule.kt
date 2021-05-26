@@ -1,11 +1,15 @@
 package dev.burak.ovapp.module
 
 import android.content.Context
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.burak.ovapp.database.FavouriteDao
+import dev.burak.ovapp.database.FavouriteRepository
+import dev.burak.ovapp.database.FavouriteRoomDatabase
 import dev.burak.ovapp.util.OvApi
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -52,4 +56,24 @@ object MainModule {
         .client(httpClient)
         .build()
         .create(OvApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideFavouriteRoomDatabase(
+        @ApplicationContext context: Context
+    ) = Room.databaseBuilder(
+        context, FavouriteRoomDatabase::class.java, "FAVOURITE_DATABASE"
+    ).build()
+
+    @Singleton
+    @Provides
+    fun provideFavouriteDao(
+        database: FavouriteRoomDatabase
+    ) = database.favouriteDao()
+
+    @Singleton
+    @Provides
+    fun provideFavouriteRepository(
+        favouriteDao: FavouriteDao
+    ) = FavouriteRepository(favouriteDao)
 }

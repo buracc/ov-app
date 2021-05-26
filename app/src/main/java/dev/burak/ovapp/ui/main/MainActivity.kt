@@ -2,16 +2,15 @@ package dev.burak.ovapp.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Spinner
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dev.burak.ovapp.R
-import dev.burak.ovapp.exception.StationNotFoundException
 import dev.burak.ovapp.model.trips.Trip
 import dev.burak.ovapp.ui.favourites.FavouritesActivity
+import dev.burak.ovapp.ui.main.pickers.DatePickerFragment
+import dev.burak.ovapp.ui.main.pickers.TimePickerFragment
 import dev.burak.ovapp.ui.search.SearchActivity
 import dev.burak.ovapp.util.DateUtil
 import dev.burak.ovapp.util.OvApi
@@ -47,16 +46,22 @@ class MainActivity : AppCompatActivity() {
         initViews()
     }
 
+    override fun onResume() {
+        super.onResume()
+        searchProgressBar.visibility = View.INVISIBLE
+    }
+
     private fun initViews() {
         val now = LocalDateTime.now()
-        ptDay.setText(now.dayOfMonth.toString())
-        ptMonth.setText(now.monthValue.toString())
-        ptYear.setText(now.year.toString())
-        ptHours.setText(now.hour.toString())
-        ptMinutes.setText(now.minute.toString())
+        ptDate.text = "${now.dayOfMonth}-${now.monthValue}-${now.year}"
+        ptTime.text = "${now.hour}:${now.minute}"
 
         btnSearch.setOnClickListener {
-            search()
+            if (search()) {
+                searchProgressBar.visibility = View.VISIBLE
+            } else {
+                searchProgressBar.visibility = View.INVISIBLE
+            }
         }
 
         btnFavourites.setOnClickListener {
@@ -83,51 +88,67 @@ class MainActivity : AppCompatActivity() {
         ptTo.setText(stations.random().name)
     }
 
-    private fun search() {
+    private fun search(): Boolean {
         try {
             val stations = getStations()
             val origin = stations.firstOrNull { it.names.values.contains(ptFrom.text.toString()) }
             val destination = stations.firstOrNull { it.names.values.contains(ptTo.text.toString()) }
+            val date = ptDate.text.toString().split("-")
+            val time = ptTime.text.toString().split(":")
             val dateTime = DateUtil.createDate(
-                ptYear.text.toString().toInt(),
-                ptMonth.text.toString().toInt(),
-                ptDay.text.toString().toInt(),
-                ptHours.text.toString().toInt(),
-                ptMinutes.text.toString().toInt()
+                date[2].toInt(),
+                date[1].toInt(),
+                date[0].toInt(),
+                time[0].toInt(),
+                time[1].toInt()
             )
 
-            if (origin != null && destination != null) {
-                try {
-                    GlobalScope.launch(Dispatchers.IO) {
-                        val request = ovApi.getTrips(
-                            origin.uicCode, destination.uicCode, dateTime.toZonedDateTime().toString()
-                        )
-                        println(request)
-                        val trips = request.body()?.trips ?: return@launch
-                        val arraylist = arrayListOf<Trip>().also {
-                            trips.forEach { t -> it.add(t) }
-                        }
-                        startActivity(
-                            Intent(this@MainActivity, SearchActivity::class.java)
-                                .putParcelableArrayListExtra("trips", arraylist)
-                                .putExtra("from", origin)
-                                .putExtra("to", destination)
-                                .putExtra("dateTime", DateUtil.toDateTimeString(dateTime))
-                        )
-                    }
-                } catch (e: StationNotFoundException) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Station ${e.message} not found.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            } else {
-                Toast.makeText(this@MainActivity, "Please fill in all fields.", Toast.LENGTH_LONG)
-                    .show()
+            if (origin == null) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Origin station ${ptFrom.text} not found.",
+                    Toast.LENGTH_LONG
+                ).show()
+                return false
             }
+
+            if (destination == null) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Destination station ${ptTo.text} not found.",
+                    Toast.LENGTH_LONG
+                ).show()
+                return false
+            }
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val request = ovApi.getTrips(
+                    origin.uicCode, destination.uicCode, dateTime.toZonedDateTime().toString()
+                )
+                val trips = request.body()?.trips ?: return@launch
+                startActivity(
+                    Intent(this@MainActivity, SearchActivity::class.java)
+                        .putParcelableArrayListExtra("trips", arrayListOf<Trip>().also {
+                            trips.forEach { t -> it.add(t) }
+                        })
+                        .putExtra("from", origin)
+                        .putExtra("to", destination)
+                        .putExtra("dateTime", DateUtil.toDateTimeString(dateTime))
+                )
+            }
+
+            return true
         } catch (e: DateTimeException) {
-            Toast.makeText(this@MainActivity, "Invalid date entered!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Invalid date entered.", Toast.LENGTH_LONG).show()
+            return false
         }
+    }
+
+    fun showTimePickerDialog(v: View) {
+        TimePickerFragment(this).show(supportFragmentManager, "timePicker")
+    }
+
+    fun showDatePickerDialog(v: View) {
+        DatePickerFragment(this).show(supportFragmentManager, "datePicker")
     }
 }

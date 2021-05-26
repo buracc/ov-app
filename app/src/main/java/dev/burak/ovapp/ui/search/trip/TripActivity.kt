@@ -10,7 +10,6 @@ import dev.burak.ovapp.model.trips.Trip
 import dev.burak.ovapp.util.DateUtil
 import kotlinx.android.synthetic.main.trip_main.*
 
-@Suppress("DEPRECATION")
 class TripActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

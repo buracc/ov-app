@@ -64,7 +64,6 @@ dependencies {
     //noinspection GradleCompatible
     implementation(group = "com.android.support", name = "cardview-v7", version = "28.0.0")
 
-
     // Http
     implementation(group = "com.squareup.retrofit2", name = "retrofit", version = "2.9.0")
     implementation(group = "com.squareup.retrofit2", name = "converter-gson", version = "2.9.0")

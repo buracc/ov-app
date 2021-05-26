@@ -3,17 +3,21 @@ package dev.burak.ovapp.ui.favourites
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.burak.ovapp.database.FavouriteRepository
 import dev.burak.ovapp.model.favourites.Favourite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FavouritesViewModel(application: Application) : AndroidViewModel(application) {
-
+@HiltViewModel
+class FavouritesViewModel @Inject constructor(
+    val favouriteRepository: FavouriteRepository,
+    application: Application
+) : AndroidViewModel(application) {
     private val ioScope = CoroutineScope(Dispatchers.IO)
-    private val favouriteRepository = FavouriteRepository(application.applicationContext)
-
     val favourites: LiveData<List<Favourite>> = favouriteRepository.getAllFavourites()
 
     fun deleteFavourite(favourite: Favourite) {

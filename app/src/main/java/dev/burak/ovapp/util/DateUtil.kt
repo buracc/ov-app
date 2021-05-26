@@ -9,7 +9,6 @@ import kotlin.math.abs
 object DateUtil {
     fun createDate(year: Int, month: Int, day: Int, hour: Int, minute: Int): OffsetDateTime {
         val calendar = GregorianCalendar(year, month - 1, day, hour, minute)
-
         return calendar.toZonedDateTime().toOffsetDateTime()
     }
 

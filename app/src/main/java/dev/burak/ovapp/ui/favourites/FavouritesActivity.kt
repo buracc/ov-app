@@ -4,12 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.burak.ovapp.R
-import dev.burak.ovapp.exception.StationNotFoundException
+import dev.burak.ovapp.exception.NoTripsFoundException
 import dev.burak.ovapp.model.favourites.Favourite
 import dev.burak.ovapp.model.favourites.adapters.FavouriteAdapter
 import dev.burak.ovapp.ui.search.SearchActivity
@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.favourites_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.time.DateTimeException
 import java.time.OffsetDateTime
 import javax.inject.Inject
 
@@ -30,8 +31,10 @@ import javax.inject.Inject
 class FavouritesActivity : AppCompatActivity() {
     @Inject
     lateinit var ovApi: OvApi
+    val favouritesViewModel: FavouritesViewModel by lazy {
+        ViewModelProvider(this).get(FavouritesViewModel::class.java)
+    }
 
-    private lateinit var favouritesViewModel: FavouritesViewModel
     private val favourites = mutableListOf<Favourite>()
     private val favouriteAdapter = FavouriteAdapter(favourites) {
         GlobalScope.launch(Dispatchers.Main) {
@@ -41,20 +44,25 @@ class FavouritesActivity : AppCompatActivity() {
                 val to = stations.firstOrNull { s -> s.names.values.contains(it.to) } ?: return@launch
                 val dateTime = OffsetDateTime.now().toZonedDateTime().toString()
                 val trips = ovApi.getTrips(from.uicCode, to.uicCode, dateTime).body()?.trips ?: return@launch
-                val arraylist = arrayListOf<Trip>().also {
-                    trips.forEach { t -> it.add(t) }
-                }
                 startActivity(
                     Intent(this@FavouritesActivity, SearchActivity::class.java)
-                        .putParcelableArrayListExtra("trips", arraylist)
+                        .putParcelableArrayListExtra("trips", arrayListOf<Trip>().also {
+                            trips.forEach { t -> it.add(t) }
+                        })
                         .putExtra("from", from)
                         .putExtra("to", to)
                         .putExtra("dateTime", DateUtil.toDateTimeString(dateTime, false))
                 )
-            } catch (e: StationNotFoundException) {
+            } catch (e: NoTripsFoundException) {
                 Toast.makeText(
                     this@FavouritesActivity,
-                    "Station ${e.message} not found.",
+                    "Couldn't find trips.",
+                    Toast.LENGTH_LONG
+                ).show()
+            } catch (e: DateTimeException) {
+                Toast.makeText(
+                    this@FavouritesActivity,
+                    "Invalid date entered.",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -72,7 +80,6 @@ class FavouritesActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        favouritesViewModel = ViewModelProviders.of(this).get(FavouritesViewModel::class.java)
         favouritesViewModel.favourites.observe(this) { g ->
             favourites.clear()
 

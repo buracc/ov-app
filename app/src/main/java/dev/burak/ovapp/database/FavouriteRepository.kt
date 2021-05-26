@@ -1,18 +1,10 @@
 package dev.burak.ovapp.database
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import dev.burak.ovapp.model.favourites.Favourite
+import javax.inject.Inject
 
-class FavouriteRepository(context: Context) {
-
-    private val favouriteDao: FavouriteDao
-
-    init {
-        val database = FavouriteRoomDatabase.getDatabase(context)
-        favouriteDao = database!!.favouriteDao()
-    }
-
+class FavouriteRepository @Inject constructor(val favouriteDao: FavouriteDao) {
     fun getAllFavourites(): LiveData<List<Favourite>> {
         return favouriteDao.getAllFavourites()
     }
