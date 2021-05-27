@@ -23,8 +23,8 @@ class TripActivity : AppCompatActivity() {
             val trip = extras.getParcelable<Trip>("trip")
 
             if (trip != null) {
-                rvFares.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-                rvFares.adapter = FareAdapter(trip.fares)
+//                rvFares.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+//                rvFares.adapter = FareAdapter(trip.fares)
 
                 rvStops.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
                 rvStops.adapter = LegAdapter(trip.legs)
@@ -39,6 +39,27 @@ class TripActivity : AppCompatActivity() {
                 tvTravelTime.text = "$diffMinutes minutes"
                 tvTransferCount.text = (trip.legs.size - 1).toString()
                 tvTripTitle.text = trip.getDirection().name ?: "Unknown"
+
+                tvFirstClassDiscount.text = "${Typography.euro}${(trip.fares.first { 
+                    it.product == "OVCHIPKAART_ENKELE_REIS"
+                            && it.discountType == "DISCOUNT_40_PERCENT"
+                            && it.travelClass == "FIRST_CLASS"
+                }.priceCents.toDouble() / 100)}"
+                tvFirstClassFull.text = "${Typography.euro}${(trip.fares.first {
+                    it.product == "OVCHIPKAART_ENKELE_REIS"
+                            && it.discountType == "NO_DISCOUNT"
+                            && it.travelClass == "FIRST_CLASS"
+                }.priceCents.toDouble() / 100)}"
+                tvSecondClassDiscount.text = "${Typography.euro}${(trip.fares.first {
+                    it.product == "OVCHIPKAART_ENKELE_REIS"
+                            && it.discountType == "DISCOUNT_40_PERCENT"
+                            && it.travelClass == "SECOND_CLASS"
+                }.priceCents.toDouble() / 100)}"
+                tvSecondClassFull.text = "${Typography.euro}${(trip.fares.first {
+                    it.product == "OVCHIPKAART_ENKELE_REIS"
+                            && it.discountType == "NO_DISCOUNT"
+                            && it.travelClass == "SECOND_CLASS"
+                }.priceCents.toDouble() / 100)}"
             }
         }
     }

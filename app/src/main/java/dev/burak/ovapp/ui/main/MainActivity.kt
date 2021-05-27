@@ -52,9 +52,13 @@ class MainActivity : AppCompatActivity() {
         ptTime.text = "${now.hour}:${min}"
 
         btnSearch.setOnClickListener {
-            if (search()) {
-                searchProgressBar.visibility = View.VISIBLE
-            } else {
+            searchProgressBar.visibility = View.VISIBLE
+            GlobalScope.launch(Dispatchers.Main) {
+                val intent = search()
+                if (intent != null) {
+                    startActivity(intent)
+                }
+
                 searchProgressBar.visibility = View.INVISIBLE
             }
         }
@@ -64,10 +68,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val stations = getStations().filter { it.country == "NL" }
         val stationsAdapter = ArrayAdapter(
             this@MainActivity,
             R.layout.dropdown_item,
-            getStations()
+            stations
         )
 
         val originAutoComplete = findViewById<AutoCompleteTextView>(R.id.ptFrom)
@@ -78,72 +83,72 @@ class MainActivity : AppCompatActivity() {
         destinationAutoComplete.setAdapter(stationsAdapter)
         destinationAutoComplete.threshold = 1
 
-        val stations = getStations()
         ptFrom.setText(stations.random().name)
         ptTo.setText(stations.random().name)
     }
 
-    private fun search(): Boolean {
-        try {
-            val stations = getStations()
-            val origin = stations.firstOrNull { it.names.values.contains(ptFrom.text.toString()) }
-            val destination = stations.firstOrNull { it.names.values.contains(ptTo.text.toString()) }
-            val date = ptDate.text.toString().split("-")
-            val time = ptTime.text.toString().split(":")
-            val dateTime = DateUtil.createDate(
-                date[2].toInt(),
-                date[1].toInt(),
-                date[0].toInt(),
-                time[0].toInt(),
-                time[1].toInt()
+    private suspend fun search(): Intent? {
+        val stations = getStations()
+        val origin = stations.firstOrNull { it.names.values.contains(ptFrom.text.toString()) }
+        val destination = stations.firstOrNull { it.names.values.contains(ptTo.text.toString()) }
+        val date = ptDate.text.toString().split("-")
+        val time = ptTime.text.toString().split(":")
+        val dateTime = DateUtil.createDate(
+            date[2].toInt(),
+            date[1].toInt(),
+            date[0].toInt(),
+            time[0].toInt(),
+            time[1].toInt()
+        )
+
+        if (origin == null) {
+            Toast.makeText(
+                this@MainActivity,
+                "Origin station ${ptFrom.text} not found.",
+                Toast.LENGTH_LONG
+            ).show()
+            return null
+        }
+
+        if (destination == null) {
+            Toast.makeText(
+                this@MainActivity,
+                "Destination station ${ptTo.text} not found.",
+                Toast.LENGTH_LONG
+            ).show()
+            return null
+        }
+
+        val result = GlobalScope.async(Dispatchers.IO) {
+            val response = ovApi.getTrips(
+                origin.uicCode, destination.uicCode, dateTime.toZonedDateTime().toString()
             )
 
-            if (origin == null) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Origin station ${ptFrom.text} not found.",
-                    Toast.LENGTH_LONG
-                ).show()
-                return false
-            }
+            Log.d("Response", response.toString())
 
-            if (destination == null) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Destination station ${ptTo.text} not found.",
-                    Toast.LENGTH_LONG
-                ).show()
-                return false
-            }
+            val responseBody = response.body() ?: return@async null
 
-            GlobalScope.launch(Dispatchers.IO) {
-                val response = ovApi.getTrips(
-                    origin.uicCode, destination.uicCode, dateTime.toZonedDateTime().toString()
-                )
+            Log.d("Response", responseBody.toString())
 
-                Log.d("Response", response.toString())
+            val trips = responseBody.trips
+            return@async Intent(this@MainActivity, SearchActivity::class.java)
+                .putParcelableArrayListExtra("trips", arrayListOf<Trip>().also {
+                    trips.forEach { t -> it.add(t) }
+                })
+                .putExtra("from", origin)
+                .putExtra("to", destination)
+                .putExtra("dateTime", DateUtil.toDateTimeString(dateTime))
+        }.await()
 
-                val responseBody = response.body() ?: return@launch
-
-                Log.d("Response", responseBody.toString())
-
-                val trips = responseBody.trips
-                startActivity(
-                    Intent(this@MainActivity, SearchActivity::class.java)
-                        .putParcelableArrayListExtra("trips", arrayListOf<Trip>().also {
-                            trips.forEach { t -> it.add(t) }
-                        })
-                        .putExtra("from", origin)
-                        .putExtra("to", destination)
-                        .putExtra("dateTime", DateUtil.toDateTimeString(dateTime))
-                )
-            }
-
-            return true
-        } catch (e: DateTimeException) {
-            Toast.makeText(this@MainActivity, "Invalid date entered.", Toast.LENGTH_LONG).show()
-            return false
+        if (result == null) {
+            Toast.makeText(
+                this@MainActivity,
+                "Can't plan a trip for these stations :(.",
+                Toast.LENGTH_LONG
+            ).show()
         }
+
+        return result
     }
 
     fun showTimePickerDialog(v: View) {
