@@ -1,4 +1,4 @@
-package dev.burak.ovapp.model.favourites.adapters
+package dev.burak.ovapp.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.burak.ovapp.R
-import dev.burak.ovapp.model.favourites.Favourite
+import dev.burak.ovapp.model.Favourite
 import kotlinx.android.synthetic.main.favourite_card.view.*
 
 class FavouriteAdapter(

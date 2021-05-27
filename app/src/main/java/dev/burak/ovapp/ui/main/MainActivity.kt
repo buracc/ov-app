@@ -2,18 +2,19 @@ package dev.burak.ovapp.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dev.burak.ovapp.R
-import dev.burak.ovapp.model.trips.Trip
+import dev.burak.ovapp.model.Trip
 import dev.burak.ovapp.ui.favourites.FavouritesActivity
 import dev.burak.ovapp.ui.main.pickers.DatePickerFragment
 import dev.burak.ovapp.ui.main.pickers.TimePickerFragment
 import dev.burak.ovapp.ui.search.SearchActivity
 import dev.burak.ovapp.util.DateUtil
-import dev.burak.ovapp.util.OvApi
+import dev.burak.ovapp.util.web.OvApi
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import java.time.DateTimeException
@@ -32,17 +33,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val spType: Spinner = findViewById(R.id.spType)
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.types,
-            android.R.layout.simple_spinner_item
-        ).also {
-            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spType.adapter = it
-        }
-
         initViews()
     }
 
@@ -76,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         val stationsAdapter = ArrayAdapter(
             this@MainActivity,
-            android.R.layout.select_dialog_item,
+            R.layout.dropdown_item,
             getStations()
         )
 
@@ -131,9 +121,13 @@ class MainActivity : AppCompatActivity() {
                     origin.uicCode, destination.uicCode, dateTime.toZonedDateTime().toString()
                 )
 
-                println(response.body())
+                Log.d("Response", response.toString())
 
-                val trips = response.body()?.trips ?: return@launch
+                val responseBody = response.body() ?: return@launch
+
+                Log.d("Response", responseBody.toString())
+
+                val trips = responseBody.trips
                 startActivity(
                     Intent(this@MainActivity, SearchActivity::class.java)
                         .putParcelableArrayListExtra("trips", arrayListOf<Trip>().also {

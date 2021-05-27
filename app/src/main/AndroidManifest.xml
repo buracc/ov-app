@@ -12,7 +12,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name="dev.burak.ovapp.ui.search.trip.TripActivity"
+                android:name="dev.burak.ovapp.ui.trip.TripActivity"
                 android:label="Trip"/>
         <activity
                 android:name="dev.burak.ovapp.ui.favourites.FavouritesActivity"

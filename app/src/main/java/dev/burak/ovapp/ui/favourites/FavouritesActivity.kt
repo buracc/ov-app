@@ -9,15 +9,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.burak.ovapp.R
-import dev.burak.ovapp.exception.NoTripsFoundException
-import dev.burak.ovapp.model.favourites.Favourite
-import dev.burak.ovapp.model.favourites.adapters.FavouriteAdapter
+import dev.burak.ovapp.model.Favourite
+import dev.burak.ovapp.adapter.FavouriteAdapter
 import dev.burak.ovapp.ui.search.SearchActivity
 import dev.burak.ovapp.util.DateUtil
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import dev.burak.ovapp.model.trips.Trip
-import dev.burak.ovapp.util.OvApi
+import dev.burak.ovapp.model.Trip
+import dev.burak.ovapp.util.web.OvApi
 import kotlinx.android.synthetic.main.favourites_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -53,12 +52,6 @@ class FavouritesActivity : AppCompatActivity() {
                         .putExtra("to", to)
                         .putExtra("dateTime", DateUtil.toDateTimeString(dateTime, false))
                 )
-            } catch (e: NoTripsFoundException) {
-                Toast.makeText(
-                    this@FavouritesActivity,
-                    "Couldn't find trips.",
-                    Toast.LENGTH_LONG
-                ).show()
             } catch (e: DateTimeException) {
                 Toast.makeText(
                     this@FavouritesActivity,

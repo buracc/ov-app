@@ -10,9 +10,8 @@ import dagger.hilt.components.SingletonComponent
 import dev.burak.ovapp.database.FavouriteDao
 import dev.burak.ovapp.database.FavouriteRepository
 import dev.burak.ovapp.database.FavouriteRoomDatabase
-import dev.burak.ovapp.util.OvApi
+import dev.burak.ovapp.util.web.OvApi
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*

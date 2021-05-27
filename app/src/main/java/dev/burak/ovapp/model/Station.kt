@@ -1,4 +1,4 @@
-package dev.burak.ovapp.model.stations
+package dev.burak.ovapp.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

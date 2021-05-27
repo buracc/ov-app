@@ -3,10 +3,9 @@ package dev.burak.ovapp.ui.favourites
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.burak.ovapp.database.FavouriteRepository
-import dev.burak.ovapp.model.favourites.Favourite
+import dev.burak.ovapp.model.Favourite
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

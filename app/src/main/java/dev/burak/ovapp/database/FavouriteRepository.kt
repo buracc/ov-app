@@ -1,7 +1,7 @@
 package dev.burak.ovapp.database
 
 import androidx.lifecycle.LiveData
-import dev.burak.ovapp.model.favourites.Favourite
+import dev.burak.ovapp.model.Favourite
 import javax.inject.Inject
 
 class FavouriteRepository @Inject constructor(val favouriteDao: FavouriteDao) {

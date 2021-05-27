@@ -1,4 +1,4 @@
-package dev.burak.ovapp.model.favourites
+package dev.burak.ovapp.model
 
 import android.os.Parcelable
 import androidx.room.Entity

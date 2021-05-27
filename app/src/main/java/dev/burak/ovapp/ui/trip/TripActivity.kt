@@ -1,13 +1,13 @@
-package dev.burak.ovapp.ui.search.trip
+package dev.burak.ovapp.ui.trip
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.burak.ovapp.R
-import dev.burak.ovapp.model.trips.adapters.FareAdapter
-import dev.burak.ovapp.model.trips.Trip
-import dev.burak.ovapp.model.trips.adapters.LegAdapter
+import dev.burak.ovapp.adapter.FareAdapter
+import dev.burak.ovapp.model.Trip
+import dev.burak.ovapp.adapter.LegAdapter
 import dev.burak.ovapp.util.DateUtil
 import kotlinx.android.synthetic.main.trip_main.*
 

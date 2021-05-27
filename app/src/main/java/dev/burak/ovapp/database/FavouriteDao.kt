@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import dev.burak.ovapp.model.favourites.Favourite
+import dev.burak.ovapp.model.Favourite
 
 @Dao
 interface FavouriteDao {

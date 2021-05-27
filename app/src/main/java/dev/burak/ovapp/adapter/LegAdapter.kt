@@ -1,4 +1,4 @@
-package dev.burak.ovapp.model.trips.adapters
+package dev.burak.ovapp.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.burak.ovapp.R
-import dev.burak.ovapp.model.trips.Leg
-import dev.burak.ovapp.model.trips.Stop
+import dev.burak.ovapp.model.Leg
 import dev.burak.ovapp.util.DateUtil
 import kotlinx.android.synthetic.main.stop_card.view.*
 

@@ -1,4 +1,4 @@
-package dev.burak.ovapp.model.trips
+package dev.burak.ovapp.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

@@ -1,4 +1,4 @@
-package dev.burak.ovapp.model.trips.adapters
+package dev.burak.ovapp.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.burak.ovapp.R
-import dev.burak.ovapp.model.trips.Trip
+import dev.burak.ovapp.model.Trip
 import dev.burak.ovapp.util.DateUtil
 import kotlinx.android.synthetic.main.search_card.view.*
 import kotlinx.android.synthetic.main.search_card.view.tvArrival
 import kotlinx.android.synthetic.main.search_card.view.tvDeparture
-import kotlinx.android.synthetic.main.trip_main.view.*
 
 class TripAdapter(
     val trips: List<Trip>,

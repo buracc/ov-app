@@ -3,24 +3,20 @@ package dev.burak.ovapp.ui.search
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.burak.ovapp.R
-import dev.burak.ovapp.model.favourites.Favourite
-import dev.burak.ovapp.model.trips.adapters.TripAdapter
-import dev.burak.ovapp.ui.search.trip.TripActivity
+import dev.burak.ovapp.model.Favourite
+import dev.burak.ovapp.adapter.TripAdapter
+import dev.burak.ovapp.ui.trip.TripActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import dev.burak.ovapp.model.stations.Station
-import dev.burak.ovapp.model.trips.Trip
-import kotlinx.android.synthetic.main.activity_main.*
+import dev.burak.ovapp.model.Station
+import dev.burak.ovapp.model.Trip
 import kotlinx.android.synthetic.main.search_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint

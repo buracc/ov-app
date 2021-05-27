@@ -1,184 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   android:background="@color/colorPrimary">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/colorPrimary">
 
-    <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/title"
-            android:textSize="30sp"
-            android:textColor="@color/colorAccent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+	<TextView
+		android:id="@+id/tvTitle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="32dp"
+		android:text="@string/title"
+		android:textSize="30sp"
+		android:textColor="@color/colorAccent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/white"
-            android:minHeight="200dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/cardMain"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="64dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="64dp"
+		android:background="@color/white"
+		android:minHeight="200dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/tvTitle">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 
-            <AutoCompleteTextView
-                    android:id="@+id/ptFrom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:autofillHints="Hilversum"
-                    android:ems="10"
-                    android:hint="@string/fromHint"
-                    android:inputType="textPersonName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+			<AutoCompleteTextView
+				android:id="@+id/ptFrom"
+				style="@style/Widget.AppCompat.AutoCompleteTextView"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="16dp"
+				android:layout_marginEnd="16dp"
+				android:hint="@string/fromHint"
+				android:inputType="textPersonName"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
 
-            <AutoCompleteTextView
-                    android:id="@+id/ptTo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:autofillHints="Utrecht Centraal"
-                    android:ems="10"
-                    android:hint="@string/toHint"
-                    android:inputType="textPersonName"
-                    app:layout_constraintEnd_toEndOf="@+id/ptFrom"
-                    app:layout_constraintStart_toStartOf="@+id/ptFrom"
-                    app:layout_constraintTop_toBottomOf="@+id/ptFrom"/>
+			<AutoCompleteTextView
+				android:id="@+id/ptTo"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:hint="@string/toHint"
+				android:inputType="textPersonName"
+				app:layout_constraintEnd_toEndOf="@+id/ptFrom"
+				app:layout_constraintStart_toStartOf="@+id/ptFrom"
+				app:layout_constraintTop_toBottomOf="@+id/ptFrom" />
 
 
-            <Spinner
-                    android:id="@+id/spType"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/ptTo"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/tvType" android:layout_marginStart="8dp"/>
+			<TextView
+				android:id="@+id/ptDate"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:layout_marginTop="8dp"
+				android:layout_marginEnd="8dp"
+				android:onClick="showDatePickerDialog"
+				android:textAppearance="@style/TextAppearance.AppCompat.Small"
+				app:layout_constraintEnd_toStartOf="@+id/btnEditDate"
+				app:layout_constraintStart_toEndOf="@+id/tvDate"
+				app:layout_constraintTop_toBottomOf="@+id/ptTo" />
 
-            <TextView
-                    android:id="@+id/ptDate"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:onClick="showDatePickerDialog"
-                    app:layout_constraintTop_toBottomOf="@+id/ptTo"
-                    android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="@+id/spType"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    app:layout_constraintEnd_toStartOf="@+id/btnEditDate" android:layout_marginEnd="8dp"/>
+			<TextView
+				android:id="@+id/ptTime"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:layout_marginEnd="8dp"
+				android:layout_marginBottom="8dp"
+				android:onClick="showTimePickerDialog"
+				android:textAppearance="@style/TextAppearance.AppCompat.Small"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toStartOf="@+id/btnEditTime"
+				app:layout_constraintStart_toStartOf="@+id/ptDate"
+				app:layout_constraintTop_toBottomOf="@+id/ptDate" />
 
-            <TextView
-                    android:id="@+id/ptTime"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:onClick="showTimePickerDialog"
-                    app:layout_constraintStart_toStartOf="@+id/spType"
-                    app:layout_constraintBottom_toTopOf="@+id/spType" app:layout_constraintTop_toBottomOf="@+id/ptDate"
-                    android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    app:layout_constraintEnd_toStartOf="@+id/btnEditTime" android:layout_marginEnd="8dp"/>
+			<ImageButton
+				android:id="@+id/btnEditTime"
+				style="@style/Widget.AppCompat.Button.Small"
+				android:layout_width="wrap_content"
+				android:layout_height="0dp"
+				android:layout_marginEnd="16dp"
+				android:adjustViewBounds="true"
+				android:background="#FFFFFF"
+				android:cropToPadding="false"
+				android:onClick="showTimePickerDialog"
+				android:scaleType="fitCenter"
+				android:src="@android:drawable/ic_menu_edit"
+				app:layout_constraintBottom_toBottomOf="@+id/ptTime"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="@+id/ptTime" />
 
-            <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:id="@+id/btnEditTime"
-                    app:layout_constraintEnd_toEndOf="@+id/spType"
-                    app:layout_constraintBottom_toTopOf="@+id/spType"
-                    style="@style/Widget.AppCompat.Button.Small"
-                    app:layout_constraintTop_toBottomOf="@+id/ptDate"
-                    android:background="#FFFFFF" android:src="@android:drawable/ic_menu_edit"
-                    android:layout_marginTop="8dp" android:layout_marginBottom="8dp" android:cropToPadding="false"
-                    android:adjustViewBounds="true" android:onClick="showTimePickerDialog"
-                    android:scaleType="fitCenter"/>
+			<ImageButton
+				android:id="@+id/btnEditDate"
+				style="@style/Widget.AppCompat.Button.Small"
+				android:layout_width="wrap_content"
+				android:layout_height="0dp"
+				android:layout_marginTop="8dp"
+				android:adjustViewBounds="true"
+				android:background="#FFFFFF"
+				android:cropToPadding="false"
+				android:onClick="showDatePickerDialog"
+				android:scaleType="fitCenter"
+				android:src="@android:drawable/ic_menu_edit"
+				app:layout_constraintBottom_toBottomOf="@+id/ptDate"
+				app:layout_constraintEnd_toEndOf="@+id/ptTo"
+				app:layout_constraintTop_toBottomOf="@+id/ptTo" />
 
-            <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:id="@+id/btnEditDate"
-                    app:layout_constraintEnd_toEndOf="@+id/btnEditTime"
-                    app:layout_constraintBottom_toTopOf="@+id/btnEditTime"
-                    style="@style/Widget.AppCompat.Button.Small"
-                    app:layout_constraintTop_toBottomOf="@+id/ptTo"
-                    android:background="#FFFFFF" android:src="@android:drawable/ic_menu_edit"
-                    android:cropToPadding="false"
-                    android:adjustViewBounds="true" android:onClick="showDatePickerDialog"
-                    android:scaleType="fitCenter" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
-            <TextView
-                    android:text="@string/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/tvDate"
-                    android:textColor="@color/colorAccent"
-                    app:layout_constraintStart_toStartOf="@+id/tvType"
-                    app:layout_constraintBottom_toBottomOf="@+id/ptDate"
-                    app:layout_constraintTop_toTopOf="@+id/ptDate"/>
-            <TextView
-                    android:text="@string/time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/tvTime"
-                    android:textColor="@color/colorAccent"
-                    app:layout_constraintStart_toStartOf="@+id/tvType"
-                    app:layout_constraintBottom_toBottomOf="@+id/ptTime"
-                    app:layout_constraintTop_toTopOf="@+id/ptTime"/>
-            <TextView
-                    android:text="@string/type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/tvType"
-                    android:textColor="@color/colorAccent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/spType"
-                    android:layout_marginStart="16dp" android:layout_marginBottom="2dp"/>
+			<TextView
+				android:id="@+id/tvDate"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="8dp"
+				android:text="@string/date"
+				android:textColor="@color/colorAccent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/ptTo" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+			<TextView
+				android:id="@+id/tvTime"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="8dp"
+				android:text="@string/time"
+				android:textColor="@color/colorAccent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
-    <Button
-            android:id="@+id/btnSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:backgroundTint="@color/lightBlue"
-            android:text="@android:string/search_go"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="@+id/cardMain"
-            app:layout_constraintStart_toStartOf="@+id/cardMain"
-            app:layout_constraintTop_toBottomOf="@+id/cardMain"/>
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</com.google.android.material.card.MaterialCardView>
 
-    <ProgressBar
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/searchProgressBar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnFavourites" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:indeterminate="true" android:visibility="invisible"/>
-    <Button
-            android:id="@+id/btnFavourites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="@color/lightBlue"
-            android:text="@string/btn_favourites"
-            android:textColor="@color/white"
-            app:icon="@android:drawable/btn_star"
-            app:layout_constraintEnd_toEndOf="@+id/btnSearch"
-            app:layout_constraintStart_toStartOf="@+id/btnSearch"
-            app:layout_constraintTop_toBottomOf="@+id/btnSearch"
-            style="@style/Widget.MaterialComponents.TimePicker.Button"/>
+	<Button
+		android:id="@+id/btnSearch"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="32dp"
+		android:backgroundTint="@color/lightBlue"
+		android:text="@android:string/search_go"
+		android:textColor="@color/white"
+		app:layout_constraintEnd_toEndOf="@+id/cardMain"
+		app:layout_constraintStart_toStartOf="@+id/cardMain"
+		app:layout_constraintTop_toBottomOf="@+id/cardMain" />
+
+	<ProgressBar
+		style="@style/Widget.AppCompat.ProgressBar"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/searchProgressBar"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/btnFavourites"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:indeterminate="true"
+		android:visibility="invisible" />
+
+	<Button
+		android:id="@+id/btnFavourites"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="32dp"
+		android:background="#FFFFFF"
+		android:backgroundTint="@color/lightBlue"
+		android:text="@string/btn_favourites"
+		android:textColor="@color/white"
+		app:icon="@android:drawable/btn_star"
+		app:layout_constraintEnd_toEndOf="@+id/btnSearch"
+		app:layout_constraintStart_toStartOf="@+id/btnSearch"
+		app:layout_constraintTop_toBottomOf="@+id/btnSearch"
+		style="@style/Widget.MaterialComponents.TimePicker.Button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
