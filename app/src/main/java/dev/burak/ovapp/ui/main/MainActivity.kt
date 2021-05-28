@@ -8,6 +8,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dev.burak.ovapp.R
+import dev.burak.ovapp.exception.UncaughtExceptionHandler
+import dev.burak.ovapp.model.Station
 import dev.burak.ovapp.model.Trip
 import dev.burak.ovapp.ui.favourites.FavouritesActivity
 import dev.burak.ovapp.ui.main.pickers.DatePickerFragment
@@ -17,6 +19,7 @@ import dev.burak.ovapp.util.DateUtil
 import dev.burak.ovapp.util.web.OvApi
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
+import java.net.UnknownHostException
 import java.time.DateTimeException
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -26,19 +29,42 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var ovApi: OvApi
 
-    fun getStations() = runBlocking(Dispatchers.IO) {
-        return@runBlocking ovApi.getStations().body()?.stations ?: return@runBlocking emptyList()
-    }
+    fun getStations() =
+        try {
+            runBlocking(Dispatchers.IO) {
+                return@runBlocking ovApi.getStations().body()?.stations ?: return@runBlocking emptyList()
+            }
+        } catch (e: UnknownHostException) {
+            Log.d("Autocomplete", e.message, e)
+            Toast.makeText(
+                this@MainActivity,
+                "Couldn't retrieve stations, are you connected to the internet?",
+                Toast.LENGTH_LONG
+            ).show()
+            emptyList()
+        }
+
+    private lateinit var stationsAdapter: ArrayAdapter<Station>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        stationsAdapter = ArrayAdapter(
+            this@MainActivity,
+            R.layout.dropdown_item,
+            getStations().filter { it.country == "NL" }
+        )
+
         initViews()
+
+        Thread.setDefaultUncaughtExceptionHandler(UncaughtExceptionHandler(this))
     }
 
     override fun onResume() {
         super.onResume()
         searchProgressBar.visibility = View.INVISIBLE
+        stationsAdapter.clear()
+        stationsAdapter.addAll(getStations().filter { it.country == "NL" })
     }
 
     private fun initViews() {
@@ -54,7 +80,19 @@ class MainActivity : AppCompatActivity() {
         btnSearch.setOnClickListener {
             searchProgressBar.visibility = View.VISIBLE
             GlobalScope.launch(Dispatchers.Main) {
-                val intent = search()
+                val intent =
+                    try {
+                        search()
+                    } catch (e: UnknownHostException) {
+                        Log.d("Search trips", e.message, e)
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Couldn't plan trip, are you connected to the internet?",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        null
+                    }
+
                 if (intent != null) {
                     startActivity(intent)
                 }
@@ -68,13 +106,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val stations = getStations().filter { it.country == "NL" }
-        val stationsAdapter = ArrayAdapter(
-            this@MainActivity,
-            R.layout.dropdown_item,
-            stations
-        )
-
         val originAutoComplete = findViewById<AutoCompleteTextView>(R.id.ptFrom)
         originAutoComplete.setAdapter(stationsAdapter)
         originAutoComplete.threshold = 1
@@ -83,12 +114,18 @@ class MainActivity : AppCompatActivity() {
         destinationAutoComplete.setAdapter(stationsAdapter)
         destinationAutoComplete.threshold = 1
 
-        ptFrom.setText(stations.random().name)
-        ptTo.setText(stations.random().name)
+        val stations = getStations().filter { it.country == "NL" }
+
+        ptFrom.setText(stations.randomOrNull()?.name)
+        ptTo.setText(stations.randomOrNull()?.name)
     }
 
     private suspend fun search(): Intent? {
         val stations = getStations()
+        if (stations.isEmpty()) {
+            return null
+        }
+
         val origin = stations.firstOrNull { it.names.values.contains(ptFrom.text.toString()) }
         val destination = stations.firstOrNull { it.names.values.contains(ptTo.text.toString()) }
         val date = ptDate.text.toString().split("-")
