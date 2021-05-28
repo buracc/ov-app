@@ -14,6 +14,7 @@ import dev.burak.ovapp.util.web.OvApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.NumberFormat
 import java.util.*
 import javax.inject.Singleton
 
@@ -75,4 +76,13 @@ object MainModule {
     fun provideFavouriteRepository(
         favouriteDao: FavouriteDao
     ) = FavouriteRepository(favouriteDao)
+
+    @Singleton
+    @Provides
+    fun provideNumberFormatter(): NumberFormat {
+        val formatter = NumberFormat.getCurrencyInstance()
+        formatter.maximumFractionDigits = 2
+        formatter.currency = Currency.getInstance("EUR")
+        return formatter
+    }
 }

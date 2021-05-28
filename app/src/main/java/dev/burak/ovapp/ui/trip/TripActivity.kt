@@ -4,14 +4,21 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import dev.burak.ovapp.R
 import dev.burak.ovapp.adapter.FareAdapter
 import dev.burak.ovapp.model.Trip
 import dev.burak.ovapp.adapter.LegAdapter
 import dev.burak.ovapp.util.DateUtil
 import kotlinx.android.synthetic.main.trip_main.*
+import java.text.NumberFormat
+import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TripActivity : AppCompatActivity() {
+    @Inject
+    lateinit var numberFormat: NumberFormat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,22 +47,22 @@ class TripActivity : AppCompatActivity() {
                 tvTransferCount.text = (trip.legs.size - 1).toString()
                 tvTripTitle.text = trip.getDirection().name ?: "Unknown"
 
-                tvFirstClassDiscount.text = "${Typography.euro}${(trip.fares.first { 
+                tvFirstClassDiscount.text = "${numberFormat.format(trip.fares.first { 
                     it.product == "OVCHIPKAART_ENKELE_REIS"
                             && it.discountType == "DISCOUNT_40_PERCENT"
                             && it.travelClass == "FIRST_CLASS"
                 }.priceCents.toDouble() / 100)}"
-                tvFirstClassFull.text = "${Typography.euro}${(trip.fares.first {
+                tvFirstClassFull.text = "${numberFormat.format(trip.fares.first {
                     it.product == "OVCHIPKAART_ENKELE_REIS"
                             && it.discountType == "NO_DISCOUNT"
                             && it.travelClass == "FIRST_CLASS"
                 }.priceCents.toDouble() / 100)}"
-                tvSecondClassDiscount.text = "${Typography.euro}${(trip.fares.first {
+                tvSecondClassDiscount.text = "${numberFormat.format(trip.fares.first {
                     it.product == "OVCHIPKAART_ENKELE_REIS"
                             && it.discountType == "DISCOUNT_40_PERCENT"
                             && it.travelClass == "SECOND_CLASS"
                 }.priceCents.toDouble() / 100)}"
-                tvSecondClassFull.text = "${Typography.euro}${(trip.fares.first {
+                tvSecondClassFull.text = "${numberFormat.format(trip.fares.first {
                     it.product == "OVCHIPKAART_ENKELE_REIS"
                             && it.discountType == "NO_DISCOUNT"
                             && it.travelClass == "SECOND_CLASS"
