@@ -7,6 +7,7 @@ import dev.burak.ovapp.getOrAwaitValueTest
 import dev.burak.ovapp.model.Favourite
 import dev.burak.ovapp.repository.FakeFavouriteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -20,11 +21,14 @@ class SearchViewModelTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var viewModel: SearchViewModel
-    private val favourite = Favourite("Hilversum", "Amsterdam", id = 1)
+    private val favourite = Favourite("Hilversum", "Amsterdam", id = 2)
 
     @Before
     fun setUp() {
         viewModel = SearchViewModel(FakeFavouriteRepository())
+        runBlocking {
+            viewModel.favouriteRepository.deleteAllFavourites()
+        }
     }
 
     @Test

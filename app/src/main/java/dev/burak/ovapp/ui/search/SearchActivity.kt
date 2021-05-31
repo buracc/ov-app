@@ -6,17 +6,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import dev.burak.ovapp.R
-import dev.burak.ovapp.model.Favourite
-import dev.burak.ovapp.adapter.TripAdapter
-import dev.burak.ovapp.ui.trip.TripActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import dev.burak.ovapp.R
+import dev.burak.ovapp.adapter.TripAdapter
+import dev.burak.ovapp.model.Favourite
 import dev.burak.ovapp.model.Station
 import dev.burak.ovapp.model.Trip
+import dev.burak.ovapp.ui.trip.TripActivity
+import dev.burak.ovapp.util.FormatUtils
 import kotlinx.android.synthetic.main.search_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.time.ZonedDateTime
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -25,7 +27,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var from: Station
     private lateinit var to: Station
 
-    val searchViewModel: SearchViewModel by lazy {
+    private val searchViewModel: SearchViewModel by lazy {
         ViewModelProvider(this).get(SearchViewModel::class.java)
     }
 
@@ -48,13 +50,13 @@ class SearchActivity : AppCompatActivity() {
 
                 val fromExtra = extras.getParcelable<Station>("from")
                 val toExtra = extras.getParcelable<Station>("to")
-                val dateTimeExtra = extras.getString("dateTime")
+                val dateTimeExtra = extras.get("dateTime") as ZonedDateTime?
 
                 if (fromExtra != null && toExtra != null && dateTimeExtra != null) {
                     from = fromExtra
                     to = toExtra
                     tvSearchTitle.text = "$from -> $to"
-                    tvSearchDate.text = dateTimeExtra
+                    tvSearchDate.text = FormatUtils.dateAndTimeFormatter.format(dateTimeExtra)
                 }
 
                 btnFavourite.setOnClickListener {
@@ -64,8 +66,7 @@ class SearchActivity : AppCompatActivity() {
                         rvSearch,
                         "Added: $favourite to favourites!",
                         Snackbar.LENGTH_SHORT
-                    )
-                        .show()
+                    ).show()
                 }
             }
         }

@@ -6,7 +6,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Trip(
     val legs: List<Leg>,
-    val fares: List<Fare>
+    val fares: List<Fare>,
+    val status: String
 ): Parcelable {
     fun getFirstLeg(): Leg {
         return legs.first()

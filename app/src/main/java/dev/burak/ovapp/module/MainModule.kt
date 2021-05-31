@@ -15,8 +15,12 @@ import dev.burak.ovapp.util.web.OvApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.DateFormat
 import java.text.NumberFormat
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
+import javax.inject.Named
 import javax.inject.Singleton
 
 private const val BASE_URL = "https://gateway.apiportal.ns.nl/"
@@ -77,13 +81,4 @@ object MainModule {
     fun provideFavouriteRepository(
         favouriteDao: FavouriteDao
     ): FavouriteRepository = DefaultFavouriteRepository(favouriteDao)
-
-    @Singleton
-    @Provides
-    fun provideNumberFormatter(): NumberFormat {
-        val formatter = NumberFormat.getCurrencyInstance()
-        formatter.maximumFractionDigits = 2
-        formatter.currency = Currency.getInstance("EUR")
-        return formatter
-    }
 }

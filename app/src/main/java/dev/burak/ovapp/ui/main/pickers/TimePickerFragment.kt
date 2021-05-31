@@ -2,7 +2,6 @@ package dev.burak.ovapp.ui.main.pickers
 
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.content.Context
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.widget.TextView
@@ -10,10 +9,11 @@ import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import dev.burak.ovapp.R
 import dev.burak.ovapp.ui.main.MainActivity
+import java.time.LocalTime
 import java.util.*
 
-class TimePickerFragment constructor(
-    private val mainActivity: MainActivity
+class TimePickerFragment(
+    val mainActivity: MainActivity
 ) : DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -25,11 +25,6 @@ class TimePickerFragment constructor(
     }
 
     override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
-        val min = if (minute < 10) {
-            "0$minute"
-        } else {
-            minute.toString()
-        }
-        mainActivity.findViewById<TextView>(R.id.ptTime)?.text = "$hourOfDay:$min"
+        mainActivity.findViewById<TextView>(R.id.ptTime)?.text = LocalTime.of(hourOfDay, minute).toString()
     }
 }

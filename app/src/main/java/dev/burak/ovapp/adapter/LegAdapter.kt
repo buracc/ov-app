@@ -1,14 +1,17 @@
 package dev.burak.ovapp.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.burak.ovapp.R
 import dev.burak.ovapp.model.Leg
-import dev.burak.ovapp.util.DateUtil
+import dev.burak.ovapp.util.FormatUtils
 import kotlinx.android.synthetic.main.stop_card.view.*
+import java.lang.Exception
+import java.time.LocalDateTime
 
 class LegAdapter(val legs: List<Leg>) : RecyclerView.Adapter<LegAdapter.ViewHolder>() {
     lateinit var context: Context
@@ -34,18 +37,20 @@ class LegAdapter(val legs: List<Leg>) : RecyclerView.Adapter<LegAdapter.ViewHold
 
         fun bind(leg: Leg) {
             itemView.tvDepStation.text = leg.origin.name
-            val departure = if (leg.origin.dateTime == "Unknown") {
+            val departure = try {
+                LocalDateTime.parse(leg.origin.dateTime, FormatUtils.nsDateTimeParser).toLocalTime().toString()
+            } catch (e: Exception) {
+                Log.e("DateTime Error", e.message, e)
                 "Unknown"
-            } else {
-                DateUtil.toTimeString(leg.origin.dateTime)
             }
 
             itemView.tvDepInfo.text = "Track ${leg.origin.track}, $departure"
 
-            val arrival = if (leg.destination.dateTime == "Unknown") {
+            val arrival = try {
+                LocalDateTime.parse(leg.destination.dateTime, FormatUtils.nsDateTimeParser).toLocalTime().toString()
+            } catch (e: Exception) {
+                Log.e("DateTime Error", e.message, e)
                 "Unknown"
-            } else {
-                DateUtil.toTimeString(leg.destination.dateTime)
             }
 
             itemView.tvArrStation.text = leg.destination.name

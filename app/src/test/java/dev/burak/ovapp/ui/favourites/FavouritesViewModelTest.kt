@@ -7,6 +7,7 @@ import dev.burak.ovapp.getOrAwaitValueTest
 import dev.burak.ovapp.model.Favourite
 import dev.burak.ovapp.repository.FakeFavouriteRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

@@ -12,7 +12,6 @@ import dev.burak.ovapp.R
 import dev.burak.ovapp.model.Favourite
 import dev.burak.ovapp.adapter.FavouriteAdapter
 import dev.burak.ovapp.ui.search.SearchActivity
-import dev.burak.ovapp.util.DateUtil
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.burak.ovapp.model.Trip
@@ -22,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.time.DateTimeException
-import java.time.OffsetDateTime
+import java.time.ZonedDateTime
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
@@ -30,7 +29,7 @@ import javax.inject.Inject
 class FavouritesActivity : AppCompatActivity() {
     @Inject
     lateinit var ovApi: OvApi
-    val favouritesViewModel: FavouritesViewModel by lazy {
+    private val favouritesViewModel: FavouritesViewModel by lazy {
         ViewModelProvider(this).get(FavouritesViewModel::class.java)
     }
 
@@ -41,8 +40,8 @@ class FavouritesActivity : AppCompatActivity() {
                 val stations = ovApi.getStations().body()?.stations ?: return@launch
                 val from = stations.firstOrNull { s -> s.names.values.contains(it.from) } ?: return@launch
                 val to = stations.firstOrNull { s -> s.names.values.contains(it.to) } ?: return@launch
-                val dateTime = OffsetDateTime.now().toZonedDateTime().toString()
-                val trips = ovApi.getTrips(from.uicCode, to.uicCode, dateTime).body()?.trips ?: return@launch
+                val dateTime = ZonedDateTime.now()
+                val trips = ovApi.getTrips(from.uicCode, to.uicCode, dateTime.toString()).body()?.trips ?: return@launch
                 startActivity(
                     Intent(this@FavouritesActivity, SearchActivity::class.java)
                         .putParcelableArrayListExtra("trips", arrayListOf<Trip>().also {
@@ -50,7 +49,7 @@ class FavouritesActivity : AppCompatActivity() {
                         })
                         .putExtra("from", from)
                         .putExtra("to", to)
-                        .putExtra("dateTime", DateUtil.toDateTimeString(dateTime, false))
+                        .putExtra("dateTime", dateTime)
                 )
             } catch (e: DateTimeException) {
                 Toast.makeText(

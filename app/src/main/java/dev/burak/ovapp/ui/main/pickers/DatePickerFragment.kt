@@ -8,10 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import dev.burak.ovapp.R
 import dev.burak.ovapp.ui.main.MainActivity
+import dev.burak.ovapp.util.FormatUtils
+import java.time.LocalDate
 import java.util.*
 
 class DatePickerFragment(
-    private val mainActivity: MainActivity
+    val mainActivity: MainActivity
 ) : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -24,6 +26,7 @@ class DatePickerFragment(
     }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
-        mainActivity.findViewById<TextView>(R.id.ptDate)?.text = "$day-${month + 1}-$year"
+        mainActivity.findViewById<TextView>(R.id.ptDate)?.text =
+            LocalDate.of(year, month + 1, day).format(FormatUtils.dateFormatter)
     }
 }

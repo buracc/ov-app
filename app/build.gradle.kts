@@ -74,7 +74,6 @@ dependencies {
     implementation(group = "com.squareup.retrofit2", name = "converter-gson", version = "2.9.0")
 
     // Etc
-    implementation(group = "com.ethlo.time", name = "itu", version = "1.3.0")
     implementation(group = "com.google.code.gson", name = "gson", version = "2.8.6")
 
     // DI

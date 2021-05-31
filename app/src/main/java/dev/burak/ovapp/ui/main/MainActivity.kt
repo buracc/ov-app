@@ -15,13 +15,12 @@ import dev.burak.ovapp.ui.favourites.FavouritesActivity
 import dev.burak.ovapp.ui.main.pickers.DatePickerFragment
 import dev.burak.ovapp.ui.main.pickers.TimePickerFragment
 import dev.burak.ovapp.ui.search.SearchActivity
-import dev.burak.ovapp.util.DateUtil
+import dev.burak.ovapp.util.FormatUtils
 import dev.burak.ovapp.util.web.OvApi
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import java.net.UnknownHostException
-import java.time.DateTimeException
-import java.time.LocalDateTime
+import java.time.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -68,14 +67,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        val now = LocalDateTime.now()
-        ptDate.text = "${now.dayOfMonth}-${now.monthValue}-${now.year}"
-        val min = if (now.minute < 10) {
-            "0${now.minute}"
-        } else {
-            now.minute.toString()
-        }
-        ptTime.text = "${now.hour}:${min}"
+        val now = ZonedDateTime.now()
+        val date = LocalDate.of(now.year, now.monthValue, now.dayOfMonth)
+        val time = LocalTime.of(now.hour, now.minute)
+
+        ptDate.text = FormatUtils.dateFormatter.format(date)
+        ptTime.text = time.toString()
 
         btnSearch.setOnClickListener {
             searchProgressBar.visibility = View.VISIBLE
@@ -128,15 +125,9 @@ class MainActivity : AppCompatActivity() {
 
         val origin = stations.firstOrNull { it.names.values.contains(ptFrom.text.toString()) }
         val destination = stations.firstOrNull { it.names.values.contains(ptTo.text.toString()) }
-        val date = ptDate.text.toString().split("-")
-        val time = ptTime.text.toString().split(":")
-        val dateTime = DateUtil.createDate(
-            date[2].toInt(),
-            date[1].toInt(),
-            date[0].toInt(),
-            time[0].toInt(),
-            time[1].toInt()
-        )
+        val date = LocalDate.parse(ptDate.text, FormatUtils.dateFormatter)
+        val time = LocalTime.parse(ptTime.text)
+        val zonedDateTime = ZonedDateTime.of(date, time, ZoneId.systemDefault())
 
         if (origin == null) {
             Toast.makeText(
@@ -158,15 +149,15 @@ class MainActivity : AppCompatActivity() {
 
         val result = GlobalScope.async(Dispatchers.IO) {
             val response = ovApi.getTrips(
-                origin.uicCode, destination.uicCode, dateTime.toZonedDateTime().toString()
+                origin.uicCode, destination.uicCode, zonedDateTime.toString()
             )
 
-            Log.d("Request", "${origin.uicCode}, ${destination.uicCode}, ${dateTime.toZonedDateTime().toString()}")
-            Log.d("Response", response.toString())
+            Log.d("NSRequest", "${origin.uicCode}, ${destination.uicCode}, ${zonedDateTime.toString()}")
+            Log.d("NSResponse", response.toString())
 
             val responseBody = response.body() ?: return@async null
 
-            Log.d("Response", responseBody.toString())
+            Log.d("NSResponse", responseBody.toString())
 
             val trips = responseBody.trips
             return@async Intent(this@MainActivity, SearchActivity::class.java)
@@ -175,7 +166,7 @@ class MainActivity : AppCompatActivity() {
                 })
                 .putExtra("from", origin)
                 .putExtra("to", destination)
-                .putExtra("dateTime", DateUtil.toDateTimeString(dateTime))
+                .putExtra("dateTime", zonedDateTime)
         }.await()
 
         if (result == null) {
@@ -189,11 +180,11 @@ class MainActivity : AppCompatActivity() {
         return result
     }
 
-    private fun showTimePickerDialog(v: View) {
+    fun showTimePickerDialog(v: View) {
         TimePickerFragment(this).show(supportFragmentManager, "timePicker")
     }
 
-    private fun showDatePickerDialog(v: View) {
+    fun showDatePickerDialog(v: View) {
         DatePickerFragment(this).show(supportFragmentManager, "datePicker")
     }
 }
