@@ -2,6 +2,7 @@ object Versions {
     // App level
     const val gradle = "4.1.1"
     const val kotlin = "1.4.31"
+    const val coroutines = "1.5.0"
 
     // Core libs
     val coreKtx = "1.5.0"
@@ -14,6 +15,7 @@ object Versions {
     val extJunit = "1.1.1"
     val espresso = "3.3.0"
     val testRunner = "1.3.0"
+    val archCore = "2.1.0"
 
     // Room
     val room = "2.3.0"

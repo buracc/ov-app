@@ -1,7 +1,6 @@
 package dev.burak.ovapp.ui.search
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.burak.ovapp.database.FavouriteRepository
 import dev.burak.ovapp.model.Favourite
@@ -12,9 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    val favouriteRepository: FavouriteRepository,
-    application: Application
-) : AndroidViewModel(application) {
+    val favouriteRepository: FavouriteRepository
+) : ViewModel() {
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     fun insertFavourite(favourite: Favourite) {

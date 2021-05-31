@@ -4,16 +4,12 @@ import androidx.lifecycle.LiveData
 import dev.burak.ovapp.model.Favourite
 import javax.inject.Inject
 
-class FavouriteRepository @Inject constructor(val favouriteDao: FavouriteDao) {
-    fun getAllFavourites(): LiveData<List<Favourite>> {
-        return favouriteDao.getAllFavourites()
-    }
+interface FavouriteRepository {
+    fun getAllFavourites(): LiveData<List<Favourite>>
 
-    suspend fun insertFavourite(favourite: Favourite) {
-        favouriteDao.insertFavourite(favourite)
-    }
+    suspend fun insertFavourite(favourite: Favourite)
 
-    suspend fun deleteFavourite(favourite: Favourite) = favouriteDao.deleteFavourite(favourite)
+    suspend fun deleteFavourite(favourite: Favourite)
 
-    suspend fun deleteAllFavourites() = favouriteDao.deleteAllFavourites()
+    suspend fun deleteAllFavourites()
 }

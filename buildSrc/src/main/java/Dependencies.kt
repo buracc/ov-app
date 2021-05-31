@@ -1,8 +1,9 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 object Dependencies {
-    //std lib
+    // Kotlin
     val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
+    val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
 
     //android ui
     private val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
@@ -15,6 +16,7 @@ object Dependencies {
     private val testRunner = "androidx.test:runner:${Versions.testRunner}"
     private val extJUnit = "androidx.test.ext:junit:${Versions.extJunit}"
     private val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    private val archCore = "androidx.arch.core:core-testing:${Versions.archCore}"
 
     val appLibraries = arrayListOf<String>().apply {
         add(kotlinStdLib)
@@ -27,10 +29,15 @@ object Dependencies {
         add(testRunner)
         add(extJUnit)
         add(espressoCore)
+        add(junit)
+        add(kotlinCoroutines)
+        add(archCore)
     }
 
     val testLibraries = arrayListOf<String>().apply {
         add(junit)
+        add(kotlinCoroutines)
+        add(archCore)
     }
 }
 

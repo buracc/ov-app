@@ -41,6 +41,11 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    packagingOptions {
+        exclude("META-INF/AL2.0")
+        exclude("META-INF/LGPL2.1")
+    }
 }
 
 dependencies {
@@ -76,9 +81,14 @@ dependencies {
     implementation(group = "com.google.dagger", name = "hilt-android", version = "2.35.1")
     kapt(group = "com.google.dagger", name = "hilt-compiler", version = "2.35.1")
 
+
+    // Test
     androidTestImplementation(group = "com.google.dagger", name = "hilt-android-testing", version = "2.35.1")
     kaptAndroidTest(group = "com.google.dagger", name = "hilt-compiler", version = "2.35.1")
 
     testImplementation(group = "com.google.dagger", name = "hilt-android-testing", version = "2.35.1")
     kaptTest(group = "com.google.dagger", name = "hilt-compiler", version = "2.35.1")
+
+    androidTestImplementation(group = "com.google.truth", name = "truth", version = "1.1.3")
+    testImplementation(group = "com.google.truth", name = "truth", version = "1.1.3")
 }

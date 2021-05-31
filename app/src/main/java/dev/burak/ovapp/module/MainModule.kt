@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.burak.ovapp.database.DefaultFavouriteRepository
 import dev.burak.ovapp.database.FavouriteDao
 import dev.burak.ovapp.database.FavouriteRepository
 import dev.burak.ovapp.database.FavouriteRoomDatabase
@@ -75,7 +76,7 @@ object MainModule {
     @Provides
     fun provideFavouriteRepository(
         favouriteDao: FavouriteDao
-    ) = FavouriteRepository(favouriteDao)
+    ): FavouriteRepository = DefaultFavouriteRepository(favouriteDao)
 
     @Singleton
     @Provides

@@ -161,6 +161,7 @@ class MainActivity : AppCompatActivity() {
                 origin.uicCode, destination.uicCode, dateTime.toZonedDateTime().toString()
             )
 
+            Log.d("Request", "${origin.uicCode}, ${destination.uicCode}, ${dateTime.toZonedDateTime().toString()}")
             Log.d("Response", response.toString())
 
             val responseBody = response.body() ?: return@async null
@@ -188,11 +189,11 @@ class MainActivity : AppCompatActivity() {
         return result
     }
 
-    fun showTimePickerDialog(v: View) {
+    private fun showTimePickerDialog(v: View) {
         TimePickerFragment(this).show(supportFragmentManager, "timePicker")
     }
 
-    fun showDatePickerDialog(v: View) {
+    private fun showDatePickerDialog(v: View) {
         DatePickerFragment(this).show(supportFragmentManager, "datePicker")
     }
 }
