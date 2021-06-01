@@ -1,6 +1,7 @@
 package dev.burak.ovapp.ui.trip
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,27 +42,32 @@ class TripActivity : AppCompatActivity() {
                 tvTravelTime.text = "$diffMinutes minutes"
                 tvTransferCount.text = (trip.legs.size - 1).toString()
                 tvTripTitle.text = trip.getDirection().name ?: "Unknown"
+                tvCancelled.visibility = if (trip.status == "CANCELLED") {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
 
-                tvFirstClassDiscount.text = "${FormatUtils.currencyFormatter.format(trip.fares.first { 
+                tvFirstClassDiscount.text = FormatUtils.currencyFormatter.format(trip.fares.first {
                     it.product == "OVCHIPKAART_ENKELE_REIS"
                             && it.discountType == "DISCOUNT_40_PERCENT"
                             && it.travelClass == "FIRST_CLASS"
-                }.priceCents.toDouble() / 100)}"
-                tvFirstClassFull.text = "${FormatUtils.currencyFormatter.format(trip.fares.first {
+                }.priceCents.toDouble() / 100)
+                tvFirstClassFull.text = FormatUtils.currencyFormatter.format(trip.fares.first {
                     it.product == "OVCHIPKAART_ENKELE_REIS"
                             && it.discountType == "NO_DISCOUNT"
                             && it.travelClass == "FIRST_CLASS"
-                }.priceCents.toDouble() / 100)}"
-                tvSecondClassDiscount.text = "${FormatUtils.currencyFormatter.format(trip.fares.first {
+                }.priceCents.toDouble() / 100)
+                tvSecondClassDiscount.text = FormatUtils.currencyFormatter.format(trip.fares.first {
                     it.product == "OVCHIPKAART_ENKELE_REIS"
                             && it.discountType == "DISCOUNT_40_PERCENT"
                             && it.travelClass == "SECOND_CLASS"
-                }.priceCents.toDouble() / 100)}"
-                tvSecondClassFull.text = "${FormatUtils.currencyFormatter.format(trip.fares.first {
+                }.priceCents.toDouble() / 100)
+                tvSecondClassFull.text = FormatUtils.currencyFormatter.format(trip.fares.first {
                     it.product == "OVCHIPKAART_ENKELE_REIS"
                             && it.discountType == "NO_DISCOUNT"
                             && it.travelClass == "SECOND_CLASS"
-                }.priceCents.toDouble() / 100)}"
+                }.priceCents.toDouble() / 100)
             }
         }
     }

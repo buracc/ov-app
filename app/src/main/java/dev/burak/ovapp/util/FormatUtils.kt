@@ -9,7 +9,7 @@ import kotlin.math.abs
 
 object FormatUtils {
     val dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
-    val dateAndTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+    val dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
     val nsDateTimeParser = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
     val currencyFormatter = NumberFormat.getCurrencyInstance().also {
         it.maximumFractionDigits = 2

@@ -56,7 +56,7 @@ class SearchActivity : AppCompatActivity() {
                     from = fromExtra
                     to = toExtra
                     tvSearchTitle.text = "$from -> $to"
-                    tvSearchDate.text = FormatUtils.dateAndTimeFormatter.format(dateTimeExtra)
+                    tvSearchDate.text = FormatUtils.dateTimeFormatter.format(dateTimeExtra)
                 }
 
                 btnFavourite.setOnClickListener {

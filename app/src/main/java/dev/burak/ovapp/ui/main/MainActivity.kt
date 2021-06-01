@@ -187,4 +187,11 @@ class MainActivity : AppCompatActivity() {
     fun showDatePickerDialog(v: View) {
         DatePickerFragment(this).show(supportFragmentManager, "datePicker")
     }
+
+    fun randomizeStations(view: View) {
+        val stations = getStations().filter { it.country == "NL" }
+
+        ptFrom.setText(stations.randomOrNull()?.name)
+        ptTo.setText(stations.randomOrNull()?.name)
+    }
 }

@@ -34,156 +34,166 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/tvTripTitle">
 
-		<androidx.constraintlayout.widget.ConstraintLayout
+		<ScrollView
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
-			<TextView
-				android:id="@+id/textView5"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="8dp"
-				android:layout_marginTop="8dp"
-				android:text="Travel option:"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
-				android:textColor="@android:color/black" />
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
 
-			<TextView
-				android:id="@+id/tvTravelOption"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="8dp"
-				android:layout_marginTop="8dp"
-				android:text="Train"
-				app:layout_constraintStart_toEndOf="@+id/textView5"
-				app:layout_constraintTop_toTopOf="parent" />
+				<TextView
+					android:id="@+id/textView5"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:text="Travel option:"
+					android:textColor="@android:color/black"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
 
-			<TextView
-				android:id="@+id/textView7"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="8dp"
-				android:layout_marginTop="8dp"
-				android:text="Departure:"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@+id/textView5"
-				android:textColor="@android:color/black" />
+				<TextView
+					android:id="@+id/tvTravelOption"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:text="Train"
+					app:layout_constraintStart_toEndOf="@+id/textView5"
+					app:layout_constraintTop_toTopOf="parent" />
 
-			<TextView
-				android:id="@+id/tvDeparture"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="8dp"
-				android:text="departure"
-				app:layout_constraintTop_toBottomOf="@+id/tvTravelOption"
-				app:layout_constraintStart_toStartOf="@+id/tvTravelOption" />
+				<TextView
+					android:id="@+id/textView7"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:text="Departure:"
+					android:textColor="@android:color/black"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-			<TextView
-				android:id="@+id/textView9"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="8dp"
-				android:layout_marginTop="8dp"
-				android:text="Arrival:"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@+id/textView7"
-				android:textColor="@android:color/black" />
+				<TextView
+					android:id="@+id/tvDeparture"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:text="departure"
+					app:layout_constraintStart_toStartOf="@+id/tvTravelOption"
+					app:layout_constraintTop_toBottomOf="@+id/tvTravelOption" />
 
-			<TextView
-				android:id="@+id/tvArrival"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="8dp"
-				android:text="arrival"
-				app:layout_constraintTop_toBottomOf="@+id/tvDeparture"
-				app:layout_constraintStart_toStartOf="@+id/tvDeparture" />
+				<TextView
+					android:id="@+id/textView9"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:text="Arrival:"
+					android:textColor="@android:color/black"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-			<TextView
-				android:id="@+id/tvPlatformLabel"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="8dp"
-				android:layout_marginTop="8dp"
-				android:text="Platform:"
-				android:textColor="@android:color/black"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@+id/textView9" />
+				<TextView
+					android:id="@+id/tvArrival"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:text="arrival"
+					app:layout_constraintStart_toStartOf="@+id/tvDeparture"
+					app:layout_constraintTop_toBottomOf="@+id/tvDeparture" />
 
-			<TextView
-				android:id="@+id/tvStartPlatform"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="8dp"
-				android:text="startplatform"
-				app:layout_constraintStart_toStartOf="@+id/tvArrival"
-				app:layout_constraintTop_toBottomOf="@+id/tvArrival" />
+				<TextView
+					android:id="@+id/tvPlatformLabel"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:text="Platform:"
+					android:textColor="@android:color/black"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-			<TextView
-				android:id="@+id/textView11"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="8dp"
-				android:text="Travel time:"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@+id/tvPlatformLabel"
-				android:layout_marginTop="8dp"
-				android:textColor="@android:color/black" />
+				<TextView
+					android:id="@+id/tvStartPlatform"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:text="startplatform"
+					app:layout_constraintStart_toStartOf="@+id/tvArrival"
+					app:layout_constraintTop_toBottomOf="@+id/tvArrival" />
 
-			<TextView
-				android:id="@+id/tvTravelTime"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="travel time"
-				app:layout_constraintTop_toTopOf="@+id/textView11"
-				app:layout_constraintStart_toStartOf="@+id/tvStartPlatform" />
+				<TextView
+					android:id="@+id/textView11"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:text="Travel time:"
+					android:textColor="@android:color/black"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/tvPlatformLabel" />
 
-			<TextView
-				android:id="@+id/textView13"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="8dp"
-				android:layout_marginTop="8dp"
-				android:text="Transfers:"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@+id/textView11"
-				android:textColor="@android:color/black" />
+				<TextView
+					android:id="@+id/tvTravelTime"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="travel time"
+					app:layout_constraintStart_toStartOf="@+id/tvStartPlatform"
+					app:layout_constraintTop_toTopOf="@+id/textView11" />
 
-			<TextView
-				android:id="@+id/tvTransferCount"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="transfers"
-				app:layout_constraintTop_toTopOf="@+id/textView13"
-				app:layout_constraintStart_toStartOf="@+id/tvTravelTime" />
+				<TextView
+					android:id="@+id/textView13"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:text="Transfers:"
+					android:textColor="@android:color/black"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-			<TextView
+				<TextView
+					android:id="@+id/tvTransferCount"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="transfers"
+					app:layout_constraintStart_toStartOf="@+id/tvTravelTime"
+					app:layout_constraintTop_toTopOf="@+id/textView13" />
+
+				<TextView
 					android:id="@+id/tvTransfers"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:layout_marginTop="16dp"
 					android:text="Legs/Transfers"
 					android:textSize="18sp"
 					android:textStyle="bold|italic"
-					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintTop_toBottomOf="@+id/tvTransferCount" android:layout_marginTop="16dp"/>
-			<com.google.android.material.card.MaterialCardView
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/tvTransferCount" />
+
+				<com.google.android.material.card.MaterialCardView
 					android:id="@+id/cardStops"
 					android:layout_width="0dp"
-					android:layout_height="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:layout_marginTop="8dp"
+					android:layout_marginEnd="8dp"
+					android:layout_marginBottom="8dp"
 					android:background="@color/white"
-					app:layout_constraintTop_toBottomOf="@+id/tvTransfers" app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-					android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
-					app:layout_constraintBottom_toTopOf="@+id/cardFares" android:layout_marginBottom="8dp">
+					app:layout_constraintBottom_toTopOf="@+id/cardFares"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/tvTransfers">
 
-				<androidx.recyclerview.widget.RecyclerView
+					<androidx.recyclerview.widget.RecyclerView
 						android:id="@+id/rvStops"
 						android:layout_width="match_parent"
-						android:layout_height="match_parent"/>
-			</com.google.android.material.card.MaterialCardView>
+						android:layout_height="match_parent" />
+				</com.google.android.material.card.MaterialCardView>
 
-			<com.google.android.material.card.MaterialCardView
+				<com.google.android.material.card.MaterialCardView
 					android:id="@+id/cardFares"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -195,11 +205,11 @@
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toStartOf="parent">
 
-				<androidx.constraintlayout.widget.ConstraintLayout
+					<androidx.constraintlayout.widget.ConstraintLayout
 						android:layout_width="match_parent"
-						android:layout_height="wrap_content">
+						android:layout_height="match_parent">
 
-					<TextView
+						<TextView
 							android:id="@+id/tvFaresTitle"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -209,18 +219,18 @@
 							android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 							android:textStyle="italic"
 							app:layout_constraintStart_toStartOf="parent"
-							app:layout_constraintTop_toTopOf="parent"/>
+							app:layout_constraintTop_toTopOf="parent" />
 
-					<TextView
+						<TextView
 							android:id="@+id/textView6"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="8dp"
 							android:text="Second class"
 							app:layout_constraintStart_toStartOf="@id/tvFaresTitle"
-							app:layout_constraintTop_toBottomOf="@id/tvFaresTitle"/>
+							app:layout_constraintTop_toBottomOf="@id/tvFaresTitle" />
 
-					<TextView
+						<TextView
 							android:id="@+id/textView8"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -229,41 +239,41 @@
 							android:text="First class"
 							app:layout_constraintBottom_toBottomOf="parent"
 							app:layout_constraintStart_toStartOf="@id/textView6"
-							app:layout_constraintTop_toBottomOf="@id/textView6"/>
+							app:layout_constraintTop_toBottomOf="@id/textView6" />
 
-					<TextView
+						<TextView
 							android:id="@+id/tvFirstClassDiscount"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:text="firstDisc"
 							app:layout_constraintStart_toStartOf="@+id/tvSecondClassDiscount"
-							app:layout_constraintTop_toTopOf="@+id/textView8"/>
+							app:layout_constraintTop_toTopOf="@+id/textView8" />
 
-					<TextView
+						<TextView
 							android:id="@+id/tvFirstClassFull"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:text="firstFull"
 							app:layout_constraintStart_toStartOf="@+id/tvSecondClassFull"
-							app:layout_constraintTop_toTopOf="@+id/textView8"/>
+							app:layout_constraintTop_toTopOf="@+id/textView8" />
 
-					<TextView
+						<TextView
 							android:id="@+id/tvSecondClassDiscount"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:text="secondDisc"
 							app:layout_constraintStart_toStartOf="@+id/textView16"
-							app:layout_constraintTop_toTopOf="@+id/textView6"/>
+							app:layout_constraintTop_toTopOf="@+id/textView6" />
 
-					<TextView
+						<TextView
 							android:id="@+id/tvSecondClassFull"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:text="secondFull"
 							app:layout_constraintStart_toStartOf="@+id/textView15"
-							app:layout_constraintTop_toTopOf="@+id/textView6"/>
+							app:layout_constraintTop_toTopOf="@+id/textView6" />
 
-					<TextView
+						<TextView
 							android:id="@+id/textView15"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -271,9 +281,9 @@
 							android:text="Full price"
 							android:textStyle="bold"
 							app:layout_constraintEnd_toStartOf="@+id/textView16"
-							app:layout_constraintTop_toTopOf="@+id/tvFaresTitle"/>
+							app:layout_constraintTop_toTopOf="@+id/tvFaresTitle" />
 
-					<TextView
+						<TextView
 							android:id="@+id/textView16"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -281,11 +291,24 @@
 							android:text="Discounted"
 							android:textStyle="bold"
 							app:layout_constraintEnd_toEndOf="parent"
-							app:layout_constraintTop_toTopOf="@+id/tvFaresTitle"/>
-				</androidx.constraintlayout.widget.ConstraintLayout>
-			</com.google.android.material.card.MaterialCardView>
-		</androidx.constraintlayout.widget.ConstraintLayout>
+							app:layout_constraintTop_toTopOf="@+id/tvFaresTitle" />
+					</androidx.constraintlayout.widget.ConstraintLayout>
+				</com.google.android.material.card.MaterialCardView>
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+		</ScrollView>
+
 	</com.google.android.material.card.MaterialCardView>
+
+	<TextView
+		android:id="@+id/tvCancelled"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="This trip has been cancelled"
+		android:textColor="@android:color/holo_red_dark"
+		app:layout_constraintEnd_toEndOf="@+id/tvTripTitle"
+		app:layout_constraintStart_toStartOf="@+id/tvTripTitle"
+		app:layout_constraintTop_toBottomOf="@+id/tvTripTitle" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
